@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Working Holiday Visa Calculator Australia — MyArrivalGuide</title>
+<meta name="description" content="Free Australian Working Holiday Visa calculator. Enter your visa start date and instantly see your expiry date, days remaining, and second year visa application deadline.">
+<link rel="canonical" href="https://myarrivalguide.com/visa-calculator">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"] {
+    --bg: #1a1a1a;
+    --bg-card: #232323;
+    --bg-soft: #2a2a2a;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.15);
+    --text: #ededed;
+    --text-muted: #a3a3a3;
+    --text-faint: #6b6b6b;
+    --accent: #d97757;
+    --accent-soft: rgba(217,119,87,0.12);
+    --accent-border: rgba(217,119,87,0.3);
+    --green: #4caf7d;
+    --green-soft: rgba(76,175,125,0.12);
+    --red: #e87063;
+    --red-soft: rgba(232,112,99,0.1);
+    --gold: #f0b429;
+    --gold-soft: rgba(240,180,41,0.12);
+    --btn-text: #1a1a1a;
+  }
+  :root[data-theme="light"] {
+    --bg: #faf9f5;
+    --bg-card: #ffffff;
+    --bg-soft: #f0eee5;
+    --border: rgba(0,0,0,0.08);
+    --border-strong: rgba(0,0,0,0.15);
+    --text: #2a2a2a;
+    --text-muted: #5a5a5a;
+    --text-faint: #999;
+    --accent: #c8553d;
+    --accent-soft: rgba(200,85,61,0.08);
+    --accent-border: rgba(200,85,61,0.25);
+    --green: #2e7d52;
+    --green-soft: rgba(46,125,82,0.08);
+    --red: #c8453d;
+    --red-soft: rgba(200,69,61,0.06);
+    --gold: #b87500;
+    --gold-soft: rgba(184,117,0,0.1);
+    --btn-text: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  nav {
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 720px; margin: 0 auto;
+  }
+  .nav-logo {
+    font-family: 'Source Serif 4', serif;
+    font-size: 18px; font-weight: 600;
+    color: var(--text); text-decoration: none;
+  }
+  .nav-logo .accent { color: var(--accent); }
+  .nav-right { display: flex; gap: 16px; align-items: center; }
+  .nav-back {
+    font-size: 13px; color: var(--text-muted);
+    text-decoration: none; font-weight: 500;
+    transition: color 0.15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-back:hover { color: var(--text); }
+  .theme-toggle {
+    width: 32px; height: 32px; border-radius: 6px;
+    background: transparent; border: 1px solid var(--border);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); transition: all 0.15s;
+  }
+  .theme-toggle:hover { color: var(--text); border-color: var(--border-strong); }
+  .theme-toggle svg { width: 15px; height: 15px; }
+
+  .container { max-width: 720px; margin: 0 auto; padding: 0 24px 80px; }
+
+  .hero { padding: 60px 0 40px; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--accent); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+  .hero-tag::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+  .hero h1 {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(32px, 5vw, 44px);
+    font-weight: 600; line-height: 1.15;
+    letter-spacing: -1px; margin-bottom: 14px;
+  }
+  .hero p {
+    font-size: 17px; color: var(--text-muted);
+    line-height: 1.6; max-width: 520px;
+  }
+
+  /* CALCULATOR CARD */
+  .calc-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    margin-bottom: 24px;
+  }
+
+  .input-group { margin-bottom: 28px; }
+  .input-label {
+    display: block;
+    font-size: 13px; font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .input-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .date-input {
+    flex: 1; min-width: 200px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 16px; color: var(--text);
+    font-family: inherit;
+    transition: border-color 0.15s;
+    outline: none;
+    cursor: pointer;
+  }
+  .date-input:focus { border-color: var(--accent); }
+  .date-input::-webkit-calendar-picker-indicator {
+    filter: invert(0.5);
+    cursor: pointer;
+  }
+
+  .visa-type-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .visa-btn {
+    flex: 1; min-width: 120px;
+    padding: 12px 16px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px; font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer; font-family: inherit;
+    transition: all 0.15s; text-align: center;
+  }
+  .visa-btn:hover { border-color: var(--border-strong); color: var(--text); }
+  .visa-btn.active { background: var(--accent-soft); border-color: var(--accent-border); color: var(--accent); }
+
+  .calc-btn {
+    width: 100%;
+    background: var(--accent); color: var(--btn-text);
+    border: none; border-radius: 8px;
+    padding: 14px;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer; font-family: inherit;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+  .calc-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* RESULTS */
+  .results { display: none; }
+  .results.visible { display: block; }
+
+  .countdown-hero {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    text-align: center;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .countdown-hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent);
+  }
+  .countdown-label {
+    font-size: 12px; font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+  .countdown-number {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(64px, 12vw, 96px);
+    font-weight: 600; line-height: 1;
+    letter-spacing: -3px;
+    margin-bottom: 8px;
+  }
+  .countdown-number.urgent { color: var(--red); }
+  .countdown-number.warning { color: var(--gold); }
+  .countdown-number.good { color: var(--green); }
+  .countdown-sublabel {
+    font-size: 15px; color: var(--text-muted);
+  }
+
+  .progress-bar-wrap {
+    margin: 24px 0 0;
+    background: var(--bg-soft);
+    border-radius: 100px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 1s ease;
+    background: var(--green);
+  }
+  .progress-bar-fill.warning { background: var(--gold); }
+  .progress-bar-fill.urgent { background: var(--red); }
+  .progress-labels {
+    display: flex; justify-content: space-between;
+    font-size: 11px; color: var(--text-faint);
+    margin-top: 6px;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .info-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .info-card-label {
+    font-size: 11px; font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .info-card-value {
+    font-family: 'Source Serif 4', serif;
+    font-size: 20px; font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
+  .info-card-sub {
+    font-size: 12px; color: var(--text-faint);
+    margin-top: 4px;
+  }
+
+  .alert-card {
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    border-left: 3px solid;
+  }
+  .alert-card.green { background: var(--green-soft); border-color: var(--green); }
+  .alert-card.gold { background: var(--gold-soft); border-color: var(--gold); }
+  .alert-card.red { background: var(--red-soft); border-color: var(--red); }
+  .alert-title {
+    font-size: 14px; font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .alert-title.green { color: var(--green); }
+  .alert-title.gold { color: var(--gold); }
+  .alert-title.red { color: var(--red); }
+  .alert-text {
+    font-family: 'Source Serif 4', serif;
+    font-size: 15px; color: var(--text);
+    line-height: 1.55;
+  }
+
+  /* 88 DAYS SECTION */
+  .section-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 24px; font-weight: 600;
+    letter-spacing: -0.5px;
+    margin: 36px 0 16px;
+  }
+
+  .days88-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+  .days88-input-row {
+    display: flex; gap: 12px; align-items: flex-end;
+    flex-wrap: wrap; margin-bottom: 20px;
+  }
+  .days88-input-group { flex: 1; min-width: 140px; }
+  .days88-input-group label {
+    display: block;
+    font-size: 12px; font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .days88-input {
+    width: 100%;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 15px; color: var(--text);
+    font-family: inherit; outline: none;
+    transition: border-color 0.15s;
+  }
+  .days88-input:focus { border-color: var(--accent); }
+  .days88-add-btn {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid var(--accent-border);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: inherit;
+    transition: all 0.15s; white-space: nowrap;
+  }
+  .days88-add-btn:hover { background: var(--accent); color: var(--btn-text); }
+
+  .days88-progress-wrap { margin-bottom: 16px; }
+  .days88-top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .days88-count {
+    font-family: 'Source Serif 4', serif;
+    font-size: 28px; font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+  .days88-count span { font-size: 16px; color: var(--text-muted); }
+  .days88-pct { font-size: 14px; color: var(--text-muted); }
+
+  .jobs-list { margin-top: 16px; }
+  .job-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .job-item:last-child { border-bottom: none; }
+  .job-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+  }
+  .job-info { flex: 1; }
+  .job-name { font-size: 14px; font-weight: 500; }
+  .job-dates { font-size: 12px; color: var(--text-faint); margin-top: 2px; }
+  .job-days {
+    font-size: 13px; font-weight: 600;
+    color: var(--accent);
+  }
+  .job-remove {
+    background: none; border: none;
+    color: var(--text-faint); cursor: pointer;
+    font-size: 18px; padding: 0 4px;
+    transition: color 0.15s;
+  }
+  .job-remove:hover { color: var(--red); }
+
+  .empty-state {
+    text-align: center; padding: 24px;
+    color: var(--text-faint); font-size: 14px;
+  }
+
+  /* TIPS */
+  .tips-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-top: 24px;
+  }
+  .tips-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 20px; font-weight: 600;
+    margin-bottom: 16px; letter-spacing: -0.3px;
+  }
+  .tip-item {
+    display: flex; gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .tip-item:last-child { border-bottom: none; }
+  .tip-num {
+    font-size: 12px; font-weight: 600;
+    color: var(--accent); min-width: 20px;
+    padding-top: 2px;
+  }
+  .tip-text {
+    font-family: 'Source Serif 4', serif;
+    font-size: 15px; color: var(--text);
+    line-height: 1.6;
+  }
+  .tip-text strong { font-weight: 600; }
+
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--accent); text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    margin-top: 40px;
+    transition: opacity 0.15s;
+  }
+  .back-link:hover { opacity: 0.8; }
+
+  @media (max-width: 600px) {
+    .calc-card { padding: 24px 20px; }
+    .countdown-hero { padding: 28px 20px; }
+    .days88-card { padding: 22px 18px; }
+    .tips-section { padding: 22px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">My<span class="accent">Arrival</span>Guide</a>
+  <div class="nav-right">
+    <a href="/" class="nav-back">← Back to guide</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="hero-tag">Free tool</div>
+    <h1>Working Holiday Visa Calculator</h1>
+    <p>Enter your visa start date and instantly see your expiry, days remaining, application deadlines, and track your 88 days progress.</p>
+  </div>
+
+  <!-- CALCULATOR INPUT -->
+  <div class="calc-card">
+    <div class="input-group">
+      <label class="input-label">Your visa type</label>
+      <div class="visa-type-row">
+        <button class="visa-btn active" onclick="selectVisa(this, '417')" id="btn-417">Subclass 417 (Working Holiday)</button>
+        <button class="visa-btn" onclick="selectVisa(this, '462')" id="btn-462">Subclass 462 (Work and Holiday)</button>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label" for="visa-start">Visa grant date</label>
+      <div class="input-row">
+        <input type="date" class="date-input" id="visa-start" aria-label="Visa start date">
+      </div>
+      <p style="font-size: 12px; color: var(--text-faint); margin-top: 8px;">Find this in your visa grant letter or on ImmiAccount.</p>
+    </div>
+
+    <button class="calc-btn" onclick="calculate()">Calculate my visa dates →</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+
+    <!-- COUNTDOWN -->
+    <div class="countdown-hero">
+      <div class="countdown-label">Days remaining on your visa</div>
+      <div class="countdown-number" id="days-remaining">—</div>
+      <div class="countdown-sublabel" id="countdown-sub">days left</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="visa-progress" style="width: 0%"></div>
+      </div>
+      <div class="progress-labels">
+        <span id="start-label">Start</span>
+        <span id="end-label">Expiry</span>
+      </div>
+    </div>
+
+    <!-- INFO GRID -->
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-label">Visa start date</div>
+        <div class="info-card-value" id="result-start">—</div>
+        <div class="info-card-sub">Your grant date</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Visa expiry date</div>
+        <div class="info-card-value" id="result-expiry">—</div>
+        <div class="info-card-sub">12 months from grant</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Apply for 2nd year by</div>
+        <div class="info-card-value" id="result-apply">—</div>
+        <div class="info-card-sub">6 weeks before expiry</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Days elapsed</div>
+        <div class="info-card-value" id="result-elapsed">—</div>
+        <div class="info-card-sub" id="result-elapsed-sub">of 365 days used</div>
+      </div>
+    </div>
+
+    <!-- ALERT -->
+    <div id="alert-area"></div>
+
+    <!-- 88 DAYS TRACKER -->
+    <h2 class="section-title">Track your 88 days</h2>
+
+    <div class="days88-card">
+      <div class="days88-progress-wrap">
+        <div class="days88-top">
+          <div class="days88-count"><span id="days88-count">0</span> <span>/ 88 days</span></div>
+          <div class="days88-pct" id="days88-pct">0% complete</div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="days88-bar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <div class="days88-input-row">
+        <div class="days88-input-group">
+          <label for="job-name">Employer / farm name</label>
+          <input type="text" class="days88-input" id="job-name" placeholder="e.g. Sunrise Farm QLD">
+        </div>
+        <div class="days88-input-group">
+          <label for="job-start">Start date</label>
+          <input type="date" class="days88-input" id="job-start">
+        </div>
+        <div class="days88-input-group">
+          <label for="job-end">End date</label>
+          <input type="date" class="days88-input" id="job-end">
+        </div>
+        <button class="days88-add-btn" onclick="addJob()">+ Add job</button>
+      </div>
+
+      <div class="jobs-list" id="jobs-list">
+        <div class="empty-state">No jobs added yet. Add your first employer above to start tracking.</div>
+      </div>
+    </div>
+
+    <!-- TIPS -->
+    <div class="tips-section">
+      <div class="tips-title">Important reminders</div>
+      <div class="tip-item">
+        <div class="tip-num">01</div>
+        <div class="tip-text"><strong>Apply for your second year visa at least 6 weeks before expiry.</strong> Don't wait until the last week — processing takes time and you want buffer.</div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-num">02</div>
+        <div class="tip-text"><strong>Keep every payslip from your 88 days jobs.</strong> Scan them the day you get them. You'll need to prove every day when you apply for your second year.</div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-num">03</div>
+        <div class="tip-text"><strong>Check the postcode qualifies before you start the job.</strong> Not all regional postcodes count. Verify on the Home Affairs website first — one wrong postcode and those weeks don't count.</div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-num">04</div>
+        <div class="tip-text"><strong>Set up superannuation with your first employer.</strong> Your employer pays 11% of your wages into super automatically. You claim it all back when you leave Australia. Don't forget this — it's free money.</div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-num">05</div>
+        <div class="tip-text"><strong>The 88 days don't need to be consecutive.</strong> You can work at 3 different farms in different months and add them up. Just keep proper records for each.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <a href="/" class="back-link">← Back to the full arrival guide</a>
+
+</div>
+
+<script>
+const SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>';
+const MOON = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('mag-theme', next);
+  document.getElementById('theme-icon').innerHTML = next === 'dark' ? SUN : MOON;
+}
+const savedTheme = localStorage.getItem('mag-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+document.getElementById('theme-icon').innerHTML = savedTheme === 'dark' ? SUN : MOON;
+
+let visaType = '417';
+let jobs = [];
+
+function selectVisa(btn, type) {
+  visaType = type;
+  document.querySelectorAll('.visa-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function formatDate(date) {
+  return date.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function daysBetween(a, b) {
+  return Math.round((b - a) / (1000 * 60 * 60 * 24));
+}
+
+function calculate() {
+  const startInput = document.getElementById('visa-start').value;
+  if (!startInput) {
+    alert('Please enter your visa start date.');
+    return;
+  }
+
+  const start = new Date(startInput);
+  const expiry = new Date(start);
+  expiry.setFullYear(expiry.getFullYear() + 1);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const totalDays = daysBetween(start, expiry);
+  const elapsed = Math.max(0, daysBetween(start, today));
+  const remaining = Math.max(0, daysBetween(today, expiry));
+  const pct = Math.min(100, Math.round((elapsed / totalDays) * 100));
+
+  const applyDeadline = new Date(expiry);
+  applyDeadline.setDate(applyDeadline.getDate() - 42);
+
+  document.getElementById('result-start').textContent = formatDate(start);
+  document.getElementById('result-expiry').textContent = formatDate(expiry);
+  document.getElementById('result-apply').textContent = formatDate(applyDeadline);
+  document.getElementById('result-elapsed').textContent = elapsed;
+  document.getElementById('result-elapsed-sub').textContent = `of ${totalDays} days used`;
+  document.getElementById('start-label').textContent = formatDate(start);
+  document.getElementById('end-label').textContent = formatDate(expiry);
+
+  const countEl = document.getElementById('days-remaining');
+  countEl.textContent = remaining;
+
+  const progressEl = document.getElementById('visa-progress');
+  progressEl.style.width = pct + '%';
+
+  if (remaining <= 30) {
+    countEl.className = 'countdown-number urgent';
+    progressEl.className = 'progress-bar-fill urgent';
+  } else if (remaining <= 90) {
+    countEl.className = 'countdown-number warning';
+    progressEl.className = 'progress-bar-fill warning';
+  } else {
+    countEl.className = 'countdown-number good';
+    progressEl.className = 'progress-bar-fill good';
+  }
+
+  const alertArea = document.getElementById('alert-area');
+  alertArea.innerHTML = '';
+
+  if (remaining <= 0) {
+    alertArea.innerHTML = `<div class="alert-card red"><div class="alert-title red">⚠ Visa expired</div><div class="alert-text">Your visa expired on ${formatDate(expiry)}. Contact Home Affairs immediately on 131 881 if you're still in Australia.</div></div>`;
+  } else if (remaining <= 42) {
+    alertArea.innerHTML = `<div class="alert-card red"><div class="alert-title red">⚠ Apply for second year visa NOW</div><div class="alert-text">You have ${remaining} days left — you're past the recommended application window. Apply for your second year visa on ImmiAccount immediately if you have your 88 days completed.</div></div>`;
+  } else if (remaining <= 90) {
+    alertArea.innerHTML = `<div class="alert-card gold"><div class="alert-title gold">⏰ Time to think about your second year</div><div class="alert-text">You have ${remaining} days left. Your recommended application deadline is ${formatDate(applyDeadline)}. Make sure you have your 88 days completed before then.</div></div>`;
+  } else if (today < start) {
+    alertArea.innerHTML = `<div class="alert-card green"><div class="alert-title green">✓ Visa not started yet</div><div class="alert-text">Your visa starts on ${formatDate(start)}. You have ${daysBetween(today, start)} days until it begins. Use this time to get your Wise card, insurance, and accommodation sorted.</div></div>`;
+  } else {
+    alertArea.innerHTML = `<div class="alert-card green"><div class="alert-title green">✓ You're good</div><div class="alert-text">You have ${remaining} days remaining. Apply for your second year visa by ${formatDate(applyDeadline)} if you want to extend.</div></div>`;
+  }
+
+  document.getElementById('results').classList.add('visible');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function addJob() {
+  const name = document.getElementById('job-name').value.trim();
+  const start = document.getElementById('job-start').value;
+  const end = document.getElementById('job-end').value;
+
+  if (!name || !start || !end) {
+    alert('Please fill in employer name, start date, and end date.');
+    return;
+  }
+
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+
+  if (endDate <= startDate) {
+    alert('End date must be after start date.');
+    return;
+  }
+
+  const days = daysBetween(startDate, endDate);
+  jobs.push({ name, start: startDate, end: endDate, days });
+
+  document.getElementById('job-name').value = '';
+  document.getElementById('job-start').value = '';
+  document.getElementById('job-end').value = '';
+
+  renderJobs();
+}
+
+function removeJob(index) {
+  jobs.splice(index, 1);
+  renderJobs();
+}
+
+function renderJobs() {
+  const total = jobs.reduce((sum, j) => sum + j.days, 0);
+  const capped = Math.min(total, 88);
+  const pct = Math.min(100, Math.round((capped / 88) * 100));
+
+  document.getElementById('days88-count').textContent = capped;
+  document.getElementById('days88-pct').textContent = pct + '% complete';
+
+  const bar = document.getElementById('days88-bar');
+  bar.style.width = pct + '%';
+  bar.className = 'progress-bar-fill' + (pct >= 100 ? ' good' : pct >= 60 ? '' : '');
+
+  const list = document.getElementById('jobs-list');
+  if (jobs.length === 0) {
+    list.innerHTML = '<div class="empty-state">No jobs added yet. Add your first employer above to start tracking.</div>';
+    return;
+  }
+
+  list.innerHTML = jobs.map((job, i) => `
+    <div class="job-item">
+      <div class="job-dot"></div>
+      <div class="job-info">
+        <div class="job-name">${job.name}</div>
+        <div class="job-dates">${formatDate(job.start)} → ${formatDate(job.end)}</div>
+      </div>
+      <div class="job-days">${job.days} days</div>
+      <button class="job-remove" onclick="removeJob(${i})" aria-label="Remove">×</button>
+    </div>
+  `).join('');
+}
+</script>
+
+</body>
+</html>
