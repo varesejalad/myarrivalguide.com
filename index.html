@@ -405,12 +405,13 @@ nav {
   color: var(--text-faint);
   padding-top: 5px; min-width: 26px; flex-shrink: 0;
 }
-.step-head-body { flex: 1; }
+.step-head-body { flex: 1; display: flex; flex-direction: column; gap: 4px; }
 .step-title {
   font-family: 'Playfair Display', serif;
   font-size: 23px; font-weight: 700;
   line-height: 1.3; letter-spacing: -0.3px;
-  color: var(--text); margin-bottom: 6px;
+  color: var(--text);
+  display: block;
 }
 .step-summary { font-size: 16px; color: var(--text-muted); line-height: 1.55; }
 .step-tags { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
@@ -918,10 +919,10 @@ footer a { color: var(--accent); text-decoration: none; }
           <p>You apply directly through the Australian Government's ImmiAccount portal. There is no shortcut, no special service worth paying for, no insider trick.</p>
           <p>You'll need: a valid passport with at least 12 months left, proof of around AUD $5,000 in savings, and basic personal details. The application fee is currently <strong>AUD $635</strong>.</p>
           <ul>
-            <li>Apply at least 3 months before you want to fly</li>
-            <li>Your passport must be valid for the full year of your stay</li>
-            <li>Don't book flights until your visa is granted</li>
-            <li>Most people get approved within a few days to two weeks</li>
+            <li>Apply at least 3 months before you want to fly — this isn't a queue you want to be in last minute</li>
+            <li>Your passport must be valid for the full year of your stay, ideally longer</li>
+            <li>Don't book flights until your visa is actually granted — not "probably coming", actually granted</li>
+            <li>Most people get approved within a few days to two weeks — some in hours</li>
           </ul>
           <div class="my-note">
             <div class="my-note-label">From my notebook</div>
@@ -952,9 +953,9 @@ footer a { color: var(--accent); text-decoration: none; }
           <p>The Australian government technically requires you to show $5,000 AUD in savings to be granted the visa, but what you actually need to survive your first month is different.</p>
           <p>Australia is expensive. Especially accommodation. Real costs from Perth, based on actual experience:</p>
           <ul>
-            <li>7 nights Airbnb in the suburbs (split three ways): ~$330 each</li>
-            <li>Hotel when you're desperate and nothing else is available: expensive</li>
-            <li>Food and basics for first 2 weeks: $300-400</li>
+            <li>7 nights Airbnb in the suburbs (split three ways): ~$330 each — and that's not even the CBD</li>
+            <li>Hotel when you're desperate and nothing else is available: whatever they want to charge, because they know you're desperate</li>
+            <li>Food and basics for first 2 weeks: $300-400 (Aldi is your friend)</li>
             <li>SIM card, transport, admin: $100-150</li>
             <li>Car from Facebook Marketplace (essential in Perth): $3,000-6,000</li>
           </ul>
@@ -995,9 +996,10 @@ footer a { color: var(--accent); text-decoration: none; }
           <p>Your home bank card will work in Australia but the exchange rates and foreign transaction fees will quietly eat your savings. A Wise card uses the real exchange rate and charges almost nothing for currency conversion.</p>
           <p>Wise gives you a multi-currency account that holds AUD, EUR, GBP, USD, and dozens more. You load it from your home bank, then spend in Australia at the actual mid-market rate.</p>
           <ul>
-            <li>Set it up at home — verification is much easier with a home address</li>
-            <li>Load it with €500-1000 equivalent before you fly</li>
-            <li>Use it from day one until you open an Australian bank account</li>
+            <li>Set it up at home — identity verification is much easier when you have a home address to verify against</li>
+            <li>Load it with €500-1000 equivalent before you fly — enough to cover your first week without panic</li>
+            <li>Use it from day one until you open an Australian bank account (3-5 days after landing)</li>
+            <li>It also works great for sending money home later — real exchange rate, not bank robbery rates</li>
           </ul>
           <div class="my-note">
             <div class="my-note-label">From my notebook</div>
@@ -1320,11 +1322,11 @@ footer a { color: var(--accent); text-decoration: none; }
       <div class="step-body">
         <div class="step-body-inner">
           <ul>
-            <li><strong>No tipping.</strong> Australians do not tip in restaurants, bars, taxis, or anywhere else. Staff are paid proper wages.</li>
-            <li><strong>Tap and go everywhere.</strong> Even tiny shops take contactless. Cash is rare — you can survive a year barely touching it.</li>
-            <li><strong>Prices include GST.</strong> What you see on the menu is what you pay. No mental math at the till.</li>
-            <li><strong>Minimum wage is AUD $24.10/hour.</strong> One of the highest in the world. This is why everything feels expensive — wages are too.</li>
-            <li><strong>Weekend penalty rates.</strong> You can earn 1.5x or 2x normal pay on weekends in hospitality. Worth knowing when job hunting.</li>
+            <li><strong>No tipping.</strong> Australians genuinely do not tip. Not in restaurants, not in bars, not in taxis. Service staff are paid actual living wages here. Tip if you want, but you'll just get a confused look.</li>
+            <li><strong>Tap and go everywhere.</strong> Even tiny market stalls take contactless. You can genuinely survive a full year without touching cash. It's beautiful.</li>
+            <li><strong>Prices include GST.</strong> What you see on the menu is what you pay. No surprise 10% at the till. Revolutionary concept.</li>
+            <li><strong>Minimum wage is AUD $24.10/hour.</strong> One of the highest in the world. This is why everything feels expensive — wages are high too. It balances out more than you'd think.</li>
+            <li><strong>Weekend penalty rates.</strong> You can earn 1.5x or 2x normal pay on weekends in hospitality. Sunday shifts are basically voluntary overtime without the guilt trip.</li>
           </ul>
           <div class="my-note">
             <div class="my-note-label">From my notebook</div>
@@ -1404,10 +1406,10 @@ footer a { color: var(--accent); text-decoration: none; }
           <p>Backpackers are targeted because we're new, often desperate for work, and don't know what's normal yet. You're basically walking around with a sign that says "please take advantage of me" — so don't make it easy for them.</p>
           <p>The main scams to know:</p>
           <ul>
-            <li><strong>"Placement fee" job scams</strong> — asking $100-500 upfront to be placed in farm work. Real companies never charge workers.</li>
-            <li><strong>Fake farm work</strong> — jobs that don't exist. Verify with the farm directly before traveling.</li>
-            <li><strong>TFN/visa "processing services"</strong> — charging for things the government provides free.</li>
-            <li><strong>Cash-in-hand only</strong> — can't prove your 88 days without payslips.</li>
+            <li><strong>"Placement fee" job scams</strong> — asking $100-500 upfront to be placed in farm work. Real companies never charge workers. Ever. If they ask for money, hang up and report them to Fair Work.</li>
+            <li><strong>Fake farm work listings</strong> — jobs that don't exist. The farm is real but has no idea who's advertising on their behalf. Always call the farm directly before traveling 6 hours to the middle of nowhere.</li>
+            <li><strong>TFN/visa "processing services"</strong> — charging you money to fill in a free 10-minute government form. It is exactly as stupid as it sounds and unfortunately it works on people who are stressed and newly arrived.</li>
+            <li><strong>Cash-in-hand only jobs</strong> — no payslip means no proof for your 88 days, no super contributions, and no record for your tax return. Even if it pays well today, it costs you more in the long run.</li>
           </ul>
           <div class="my-note">
             <div class="my-note-label">From my notebook</div>
@@ -1442,11 +1444,11 @@ footer a { color: var(--accent); text-decoration: none; }
         <div class="step-body-inner">
           <p>You can do almost any job on a WHV, but you can only work for the same employer for 6 months. After that you must switch.</p>
           <ul>
-            <li><strong>Hospitality</strong> — cafes, restaurants, bars. Easiest to get with zero Australian experience. Great weekend pay.</li>
-            <li><strong>Retail</strong> — clothing stores, supermarkets. Stable hours, decent pay.</li>
-            <li><strong>Construction</strong> — labouring, traffic control. High pay but needs a White Card certificate ($60).</li>
-            <li><strong>Farm work</strong> — required for your 88 days. Pay varies massively by farm.</li>
-            <li><strong>Cleaning</strong> — hotels, offices, Airbnb turnovers. Easy to get, often cash in hand (risky).</li>
+            <li><strong>Hospitality</strong> — cafes, restaurants, bars. Easiest to get with zero Australian experience. RSA certificate opens more doors. Weekend penalty rates are genuinely life-changing.</li>
+            <li><strong>Retail</strong> — clothing stores, supermarkets, electronics. Stable hours, decent pay, much less sweaty than farm work.</li>
+            <li><strong>Construction</strong> — labouring, traffic control, general hand. High pay but needs a White Card ($60-100 for a one-day course). Traffic control in particular is popular — you stand by a sign for 8 hours and earn $40/hour. It sounds boring because it is, but it pays well.</li>
+            <li><strong>Farm work</strong> — required for your 88 days. Pay varies wildly by farm. Choose carefully.</li>
+            <li><strong>Cleaning</strong> — hotels, offices, Airbnb turnovers. Easy to get, flexible hours, often cash in hand (avoid the cash in hand part — see the scams step).</li>
           </ul>
           <div class="my-note">
             <div class="my-note-label">From my notebook</div>
@@ -1469,12 +1471,12 @@ footer a { color: var(--accent); text-decoration: none; }
         <div class="step-body-inner">
           <p>The Australian resume is dramatically simpler than what you'd write in most European countries. Trying to use a fancy European-style CV will actively hurt you.</p>
           <ul>
-            <li><strong>One page only.</strong> Two pages max if you have real experience.</li>
-            <li><strong>No photo.</strong> Considered unprofessional.</li>
-            <li><strong>No personal details</strong> beyond name, phone, email, suburb.</li>
-            <li><strong>Brief summary</strong> at top — 2-3 lines about what you do.</li>
-            <li><strong>Work experience</strong> — most recent first, brief bullet points.</li>
-            <li><strong>References</strong> at the bottom — "Available on request" is fine.</li>
+            <li><strong>One page only.</strong> Two pages maximum if you genuinely have enough experience to fill them. When in doubt — one page.</li>
+            <li><strong>No photo.</strong> In Australia this is considered unprofessional and potentially a bias risk. Leave it off.</li>
+            <li><strong>No personal details</strong> beyond name, phone, email, and suburb. They don't need your date of birth, nationality, or passport number at this stage.</li>
+            <li><strong>A brief summary</strong> at the top — 2-3 sentences about what you do and what you're looking for. Not "I am a motivated team player who works hard." Something specific.</li>
+            <li><strong>Work experience</strong> — most recent first, brief bullet points starting with action verbs. "Managed", "Served", "Prepared" — not "Was responsible for".</li>
+            <li><strong>References</strong> at the bottom — "Available on request" is completely fine.</li>
           </ul>
           <p>Plain formatting. Black text on white. No icons. No infographics. No skill progress bars.</p>
           <div class="my-note">
@@ -1498,13 +1500,13 @@ footer a { color: var(--accent); text-decoration: none; }
       <div class="step-body">
         <div class="step-body-inner">
           <ul>
-            <li><strong>Seek.com.au</strong> — by far the biggest job site in Australia. Used by almost every employer.</li>
-            <li><strong>Indeed.com.au</strong> — second biggest. Good for casual work.</li>
-            <li><strong>Gumtree</strong> — older, more casual. Watch for scams.</li>
-            <li><strong>Backpacker Facebook groups</strong> — for hospitality, farm work, quick gigs.</li>
-            <li><strong>Walking in with a printed CV</strong> — still works in hospitality and retail. Tuesday-Wednesday mornings 10am-12pm is the sweet spot.</li>
+            <li><strong>Seek.com.au</strong> — by far the biggest job site in Australia. If it's a real job, it's probably on Seek. Set up alerts for your job type and city.</li>
+            <li><strong>Indeed.com.au</strong> — second biggest. Good for entry-level and casual work. Slightly more relaxed than Seek.</li>
+            <li><strong>Gumtree</strong> — older platform, more casual. Lots of legit jobs but also more scams. Use your judgement.</li>
+            <li><strong>Backpacker Facebook groups</strong> — for hospitality tips, farm work leads, and quick one-off gigs. Often the fastest way to hear about something opening up nearby.</li>
+            <li><strong>Walking in with a printed CV</strong> — still works for hospitality and retail. Tuesday to Wednesday mornings 10am-12pm is genuinely the sweet spot. Managers are less busy, not stressed from a lunch rush.</li>
           </ul>
-          <p>Apply to 10+ jobs at once. Don't wait for replies before applying to more. Most won't respond. That's normal.</p>
+          <p>Apply to 10+ jobs at once. Don't wait for replies before applying to more. The Australian job market moves fast and most employers won't even read your email if they've already found someone. Volume is the strategy.</p>
           <div class="rec-box">
             <div class="rec-label">Recommended</div>
             <div class="rec-title">Seek — Australia's main job platform</div>
@@ -1561,10 +1563,11 @@ footer a { color: var(--accent); text-decoration: none; }
         <div class="step-body-inner">
           <p>Australian worker rights apply to you as a WHV holder exactly the same as to citizens. Some employers try to underpay backpackers thinking we don't know our rights.</p>
           <ul>
-            <li><strong>National minimum wage:</strong> AUD $24.10/hour</li>
-            <li><strong>Casual loading:</strong> if you're casual (no sick leave), you get 25% extra — minimum $30.13/hour</li>
-            <li><strong>Weekend penalty rates:</strong> Saturdays 1.25-1.5x, Sundays often 1.5-2x</li>
-            <li><strong>Public holidays:</strong> typically 2.5x normal pay</li>
+            <li><strong>National minimum wage:</strong> AUD $24.10/hour — this is the legal floor, not a target</li>
+            <li><strong>Casual loading:</strong> if you're casual (no guaranteed hours, no sick leave, no holiday pay), you get 25% on top of minimum — so at least $30.13/hour. Many backpackers don't know this and get underpaid silently.</li>
+            <li><strong>Saturday penalty rates:</strong> 1.25-1.5x normal rate in most industries</li>
+            <li><strong>Sunday penalty rates:</strong> 1.5-2x normal rate — Sunday café shifts are basically gold</li>
+            <li><strong>Public holiday rates:</strong> typically 2.5x — if you're willing to work Christmas Day, you will make a lot of money</li>
           </ul>
           <p>Look up your industry's "Award" on the Fair Work website to see your exact legal rates. Knowledge is protection.</p>
           <div class="my-note">
@@ -1963,13 +1966,13 @@ footer a { color: var(--accent); text-decoration: none; }
       </button>
       <div class="step-body">
         <div class="step-body-inner">
-          <p>The 88 days must be proven with documentation when you apply for your second-year visa. Keep:</p>
+          <p>The 88 days must be proven with documentation when you apply for your second-year visa. If you can't prove it, those days simply don't count — no exceptions. Keep all of this:</p>
           <ul>
-            <li>Every payslip — digital and paper, backed up to cloud</li>
-            <li>Employer details — name, ABN, address, contact person</li>
-            <li>Date ranges for each job — first and last day, total days worked</li>
-            <li>Form 1263 — official "Employment Verification" form, get employer to sign before you leave</li>
-            <li>Bank statements showing wages received</li>
+            <li>Every payslip — digital and paper. Scan them the day you receive them. Farms burn down, phones get stolen, hostels flood. Don't rely on paper alone.</li>
+            <li>Employer details — full legal name, ABN, physical address, and the name and number of someone who can confirm your employment</li>
+            <li>Date ranges for each job — exact start date, exact finish date, total calendar days</li>
+            <li>Form 1263 — the official Australian Government "Employment Verification" form. Get your employer to sign it before your last day. Some farms will sigh dramatically about this. Get it signed anyway.</li>
+            <li>Bank statements showing wages received — backup proof if anything gets disputed</li>
           </ul>
           <p>The 88 days don't need to be consecutive. Work at multiple farms across different months and add them up.</p>
           <div class="my-note">
@@ -2146,13 +2149,13 @@ footer a { color: var(--accent); text-decoration: none; }
         <div class="step-body-inner">
           <p>Nobody writes about this because it's not exciting and it doesn't photograph well. But it's the most important chapter.</p>
           <p>At some point in your first 2 months, you'll probably have a bad week. The excitement of arriving wears off. You're tired from working long shifts. You miss family. The realities of being far from home set in. This is normal. Almost every backpacker goes through it.</p>
-          <p>What actually helps:</p>
+          <p>What actually helps — and this is from experience, not a wellness brochure:</p>
           <ul>
-            <li>A routine — same wake-up time, gym days, regular spots</li>
-            <li>Physical exercise — most reliable mood medicine</li>
-            <li>Regular contact with home — weekly call with family</li>
-            <li>Honest conversations with other backpackers — everyone's in some version of this</li>
-            <li>Limit social media comparisons — other people's highlight reels are poison</li>
+            <li><strong>A routine.</strong> Same wake-up time, a walk or a gym session, a regular coffee spot. Sounds boring. Works surprisingly well. Structure is an antidote to chaos.</li>
+            <li><strong>Physical exercise.</strong> Even a 30 minute walk every morning changes how you see the day. This isn't a suggestion — it's the most reliable free mood medicine that exists.</li>
+            <li><strong>Regular contact with home.</strong> A weekly video call, not 47 voice messages a day. Too much contact with home makes you miss it more, not less.</li>
+            <li><strong>Actually telling someone you're struggling.</strong> Say "I'm having a rough week" out loud to another backpacker. You'll immediately find out you're not alone. Everyone is going through some version of it.</li>
+            <li><strong>Putting your phone down.</strong> Everyone's Instagram makes their life look incredible. Especially when you're sitting in a working hostel at 6am eating toast. It's not real. Your experience is.</li>
           </ul>
           <p>If things get serious: <strong>Lifeline Australia: 13 11 14.</strong> Free, confidential, 24/7.</p>
           <div class="my-note">
