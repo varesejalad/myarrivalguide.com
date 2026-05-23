@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Australian CV Builder for Working Holiday Visa | MyArrivalGuide</title>
+<meta name="description" content="Build an Australian-style CV in 5 minutes. Correct format, no photo, one page. Made for backpackers on a Working Holiday Visa. Download as text instantly.">
+<link rel="canonical" href="https://myarrivalguide.com/cv-builder.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="dark"] {
+  --bg: #141210; --bg-warm: #1a1714; --bg-card: #1e1b18; --bg-soft: #252119;
+  --border: rgba(255,235,200,0.07); --border-warm: rgba(255,235,200,0.14);
+  --text: #f2ebe0; --text-muted: #a8998a; --text-faint: #5a5048;
+  --accent: #e07040; --accent-light: rgba(224,112,64,0.12); --accent-border: rgba(224,112,64,0.3);
+  --cream-soft: rgba(245,230,200,0.06); --green: #5aab6e; --green-soft: rgba(90,171,110,0.1);
+  --btn-text: #141210; --preview-bg: #ffffff; --preview-text: #1a1a1a;
+}
+:root[data-theme="light"] {
+  --bg: #faf6ef; --bg-warm: #f5f0e6; --bg-card: #ffffff; --bg-soft: #f0ece3;
+  --border: rgba(100,80,60,0.1); --border-warm: rgba(100,80,60,0.2);
+  --text: #2a2018; --text-muted: #6a5a48; --text-faint: #b0a090;
+  --accent: #c05830; --accent-light: rgba(192,88,48,0.08); --accent-border: rgba(192,88,48,0.25);
+  --cream-soft: rgba(58,42,24,0.05); --green: #2e7a45; --green-soft: rgba(46,122,69,0.08);
+  --btn-text: #ffffff; --preview-bg: #ffffff; --preview-text: #1a1a1a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg); color: var(--text);
+  line-height: 1.65; font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.2s, color 0.2s;
+}
+nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(16px);
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--text); text-decoration: none; }
+.nav-logo .dot { color: var(--accent); }
+.nav-right { display: flex; gap: 14px; align-items: center; }
+.nav-back { font-size: 13px; color: var(--text-muted); text-decoration: none; font-weight: 500; }
+.nav-back:hover { color: var(--text); }
+.theme-btn { width: 32px; height: 32px; border-radius: 8px; background: transparent; border: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: all 0.15s; }
+.theme-btn svg { width: 15px; height: 15px; }
+
+.page-wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px 80px; }
+
+.hero { padding: 56px 0 44px; }
+.hero-eyebrow { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+.hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 14px; }
+.hero p { font-size: 18px; color: var(--text-muted); font-weight: 300; max-width: 560px; line-height: 1.6; }
+
+.rules-strip {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px 24px; margin-bottom: 32px;
+  display: flex; gap: 32px; flex-wrap: wrap;
+}
+.rule { display: flex; align-items: center; gap: 10px; }
+.rule-icon { font-size: 16px; }
+.rule-text { font-size: 13px; color: var(--text-muted); }
+.rule-text strong { color: var(--text); font-weight: 600; }
+
+/* BUILDER LAYOUT */
+.builder-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* FORM */
+.form-panel { position: sticky; top: 80px; }
+.form-section {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px; margin-bottom: 16px;
+}
+.form-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 700;
+  color: var(--text); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.form-section-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--accent);
+  background: var(--accent-light); border-radius: 6px;
+  padding: 3px 8px; font-weight: 600;
+}
+
+.form-row { margin-bottom: 14px; }
+.form-row:last-child { margin-bottom: 0; }
+.form-row label { display: block; font-size: 11px; font-weight: 600; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.form-input {
+  width: 100%; background: var(--bg-soft); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 14px;
+  font-size: 14px; color: var(--text); font-family: inherit;
+  outline: none; transition: border-color 0.15s;
+  resize: vertical;
+}
+.form-input:focus { border-color: var(--accent); }
+.form-input::placeholder { color: var(--text-faint); }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.job-item {
+  background: var(--bg-soft); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px; margin-bottom: 10px;
+  position: relative;
+}
+.job-item-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.job-item-sub { font-size: 12px; color: var(--text-faint); }
+.job-del { position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--text-faint); cursor: pointer; font-size: 18px; padding: 0; transition: color 0.15s; }
+.job-del:hover { color: #e06060; }
+
+.add-btn {
+  width: 100%; background: var(--accent-light); color: var(--accent);
+  border: 1px dashed var(--accent-border); border-radius: 8px;
+  padding: 10px; font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: all 0.15s;
+  margin-top: 8px;
+}
+.add-btn:hover { background: var(--accent); color: var(--btn-text); border-style: solid; }
+
+.generate-btn {
+  width: 100%; background: var(--accent); color: var(--btn-text);
+  border: none; border-radius: 10px; padding: 16px;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  font-family: inherit; transition: all 0.2s; margin-top: 8px;
+}
+.generate-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+
+/* PREVIEW */
+.preview-panel {}
+.preview-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px; flex-wrap: wrap; gap: 10px;
+}
+.preview-label { font-size: 12px; font-weight: 600; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.1em; }
+.preview-actions { display: flex; gap: 8px; }
+.copy-btn {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 16px;
+  font-size: 12px; font-weight: 600; color: var(--text-muted);
+  cursor: pointer; font-family: inherit; transition: all 0.15s;
+}
+.copy-btn:hover { border-color: var(--border-warm); color: var(--text); }
+.download-btn {
+  background: var(--accent); color: var(--btn-text);
+  border: none; border-radius: 8px; padding: 8px 16px;
+  font-size: 12px; font-weight: 600; cursor: pointer;
+  font-family: inherit; transition: all 0.15s;
+}
+.download-btn:hover { opacity: 0.9; }
+
+.cv-preview {
+  background: var(--preview-bg); color: var(--preview-text);
+  border: 1px solid var(--border); border-radius: 14px;
+  padding: 40px 44px; font-family: 'Georgia', serif;
+  line-height: 1.5; min-height: 600px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+.cv-name { font-size: 26px; font-weight: 700; color: #1a1a1a; letter-spacing: -0.5px; margin-bottom: 6px; }
+.cv-contact { font-size: 13px; color: #555; margin-bottom: 20px; line-height: 1.7; }
+.cv-contact a { color: #555; }
+.cv-divider { border: none; border-top: 1.5px solid #1a1a1a; margin: 18px 0 14px; }
+.cv-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #1a1a1a; margin-bottom: 12px; }
+.cv-summary { font-size: 14px; color: #333; line-height: 1.65; margin-bottom: 4px; }
+.cv-job { margin-bottom: 18px; }
+.cv-job-title { font-size: 15px; font-weight: 700; color: #1a1a1a; }
+.cv-job-company { font-size: 14px; color: #555; margin-bottom: 4px; }
+.cv-job-dates { font-size: 12px; color: #888; margin-bottom: 6px; font-style: italic; }
+.cv-job-desc { font-size: 14px; color: #333; line-height: 1.6; }
+.cv-skill-list { font-size: 14px; color: #333; line-height: 1.8; }
+.cv-ref { font-size: 14px; color: #555; }
+.cv-placeholder { color: #bbb; font-style: italic; font-size: 14px; text-align: center; padding: 40px 0; }
+
+.tip-bar {
+  background: var(--accent-light); border: 1px solid var(--accent-border);
+  border-radius: 10px; padding: 14px 18px; margin-top: 14px;
+  font-size: 13px; color: var(--text-muted); line-height: 1.55;
+}
+.tip-bar strong { color: var(--accent); }
+
+@media (max-width: 900px) {
+  .builder-layout { grid-template-columns: 1fr; }
+  .form-panel { position: static; }
+  .cv-preview { padding: 28px 24px; }
+}
+@media (max-width: 600px) {
+  .page-wrap { padding: 0 16px 60px; }
+  nav { padding: 0 16px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .rules-strip { gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">MyArrivalGuide<span class="dot">.</span></a>
+  <div class="nav-right">
+    <a href="/" class="nav-back">← Back to guide</a>
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="hero">
+    <div class="hero-eyebrow">Free tool</div>
+    <h1>Australian CV Builder</h1>
+    <p>Build a properly formatted Australian resume in 5 minutes. Correct format, no photo, one page. Made for backpackers on a Working Holiday Visa.</p>
+  </div>
+
+  <div class="rules-strip">
+    <div class="rule"><span class="rule-icon">📄</span><span class="rule-text"><strong>1 page only</strong> — Australians don't read 2-page CVs</span></div>
+    <div class="rule"><span class="rule-icon">🚫</span><span class="rule-text"><strong>No photo</strong> — considered unprofessional here</span></div>
+    <div class="rule"><span class="rule-icon">✅</span><span class="rule-text"><strong>Plain formatting</strong> — no colours, no skill bars</span></div>
+    <div class="rule"><span class="rule-icon">📱</span><span class="rule-text"><strong>References at the bottom</strong> — always include 2</span></div>
+  </div>
+
+  <div class="builder-layout">
+
+    <!-- FORM -->
+    <div class="form-panel">
+
+      <div class="form-section">
+        <div class="form-section-title"><span class="form-section-num">01</span> Personal details</div>
+        <div class="form-row">
+          <label>Full name</label>
+          <input type="text" class="form-input" id="f-name" placeholder="Arthur Trussmann" oninput="updatePreview()">
+        </div>
+        <div class="form-grid">
+          <div class="form-row">
+            <label>Phone number</label>
+            <input type="text" class="form-input" id="f-phone" placeholder="0412 345 678" oninput="updatePreview()">
+          </div>
+          <div class="form-row">
+            <label>Email address</label>
+            <input type="text" class="form-input" id="f-email" placeholder="arthur@email.com" oninput="updatePreview()">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-row">
+            <label>Suburb / City</label>
+            <input type="text" class="form-input" id="f-suburb" placeholder="Perth, WA" oninput="updatePreview()">
+          </div>
+          <div class="form-row">
+            <label>LinkedIn (optional)</label>
+            <input type="text" class="form-input" id="f-linkedin" placeholder="linkedin.com/in/arthur" oninput="updatePreview()">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title"><span class="form-section-num">02</span> Professional summary</div>
+        <div class="form-row">
+          <label>2-3 sentences about who you are and what you bring</label>
+          <textarea class="form-input" id="f-summary" rows="3" placeholder="Motivated hospitality professional with 2 years of café and bar experience across Europe. Currently on a Working Holiday Visa in Australia, available immediately for casual or part-time roles. Reliable, fast learner, and RSA certified (NSW)." oninput="updatePreview()"></textarea>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title"><span class="form-section-num">03</span> Work experience</div>
+        <div id="jobs-list"></div>
+
+        <div style="background: var(--bg-soft); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 8px;">
+          <div class="form-grid">
+            <div class="form-row">
+              <label>Job title</label>
+              <input type="text" class="form-input" id="nj-title" placeholder="Barista / Waitstaff">
+            </div>
+            <div class="form-row">
+              <label>Company / Employer</label>
+              <input type="text" class="form-input" id="nj-company" placeholder="Coffee Corner Cafe">
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-row">
+              <label>Start date</label>
+              <input type="text" class="form-input" id="nj-start" placeholder="Jan 2024">
+            </div>
+            <div class="form-row">
+              <label>End date</label>
+              <input type="text" class="form-input" id="nj-end" placeholder="Present">
+            </div>
+          </div>
+          <div class="form-row">
+            <label>Key responsibilities (2-3 bullet points)</label>
+            <textarea class="form-input" id="nj-desc" rows="3" placeholder="Prepared and served coffee and food in a fast-paced cafe environment&#10;Maintained high customer service standards during peak hours&#10;Handled cash and EFTPOS transactions accurately"></textarea>
+          </div>
+          <button class="add-btn" onclick="addJob()">+ Add this role</button>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title"><span class="form-section-num">04</span> Skills</div>
+        <div class="form-row">
+          <label>List your key skills, separated by commas</label>
+          <input type="text" class="form-input" id="f-skills" placeholder="RSA certified (NSW), barista, customer service, cash handling, team collaboration, time management" oninput="updatePreview()">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title"><span class="form-section-num">05</span> Education</div>
+        <div class="form-grid">
+          <div class="form-row">
+            <label>Qualification</label>
+            <input type="text" class="form-input" id="f-edu-degree" placeholder="Bachelor of IT" oninput="updatePreview()">
+          </div>
+          <div class="form-row">
+            <label>Institution</label>
+            <input type="text" class="form-input" id="f-edu-school" placeholder="Tallinn University of Technology" oninput="updatePreview()">
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Year completed</label>
+          <input type="text" class="form-input" id="f-edu-year" placeholder="2024" oninput="updatePreview()">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title"><span class="form-section-num">06</span> References</div>
+        <div style="margin-bottom: 16px;">
+          <div class="form-grid">
+            <div class="form-row">
+              <label>Reference 1 — Name</label>
+              <input type="text" class="form-input" id="f-ref1-name" placeholder="Jane Smith" oninput="updatePreview()">
+            </div>
+            <div class="form-row">
+              <label>Reference 1 — Role</label>
+              <input type="text" class="form-input" id="f-ref1-role" placeholder="Manager, Coffee Corner" oninput="updatePreview()">
+            </div>
+          </div>
+          <div class="form-row">
+            <label>Reference 1 — Contact</label>
+            <input type="text" class="form-input" id="f-ref1-contact" placeholder="jane@coffeecorner.com.au" oninput="updatePreview()">
+          </div>
+        </div>
+        <div>
+          <div class="form-grid">
+            <div class="form-row">
+              <label>Reference 2 — Name</label>
+              <input type="text" class="form-input" id="f-ref2-name" placeholder="Tom Nguyen" oninput="updatePreview()">
+            </div>
+            <div class="form-row">
+              <label>Reference 2 — Role</label>
+              <input type="text" class="form-input" id="f-ref2-role" placeholder="Supervisor, The Local Pub" oninput="updatePreview()">
+            </div>
+          </div>
+          <div class="form-row">
+            <label>Reference 2 — Contact</label>
+            <input type="text" class="form-input" id="f-ref2-contact" placeholder="tom@thelocal.com.au" oninput="updatePreview()">
+          </div>
+        </div>
+      </div>
+
+      <button class="generate-btn" onclick="updatePreview()">🔄 Update preview</button>
+
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="preview-panel">
+      <div class="preview-header">
+        <div class="preview-label">Live preview — Australian CV format</div>
+        <div class="preview-actions">
+          <button class="copy-btn" onclick="copyCV()">📋 Copy text</button>
+          <button class="download-btn" onclick="downloadCV()">⬇ Download .txt</button>
+        </div>
+      </div>
+
+      <div class="cv-preview" id="cv-preview">
+        <div class="cv-placeholder">Fill in your details on the left and your CV will appear here in real time.</div>
+      </div>
+
+      <div class="tip-bar">
+        <strong>Australian CV tips:</strong> Keep it to 1 page. Use plain language — no jargon. Start bullet points with action verbs (managed, served, prepared, handled). Don't include your date of birth, nationality, or visa status unless specifically asked. Always attach as a PDF when emailing.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>';
+const MOON = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('mag-theme', next);
+  document.getElementById('theme-icon').innerHTML = next === 'dark' ? SUN : MOON;
+}
+const savedTheme = localStorage.getItem('mag-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+document.getElementById('theme-icon').innerHTML = savedTheme === 'dark' ? SUN : MOON;
+
+let jobs = [];
+
+function addJob() {
+  const title = document.getElementById('nj-title').value.trim();
+  const company = document.getElementById('nj-company').value.trim();
+  const start = document.getElementById('nj-start').value.trim();
+  const end = document.getElementById('nj-end').value.trim();
+  const desc = document.getElementById('nj-desc').value.trim();
+  if (!title || !company) { alert('Please enter at least a job title and company.'); return; }
+  jobs.push({ title, company, start, end, desc });
+  document.getElementById('nj-title').value = '';
+  document.getElementById('nj-company').value = '';
+  document.getElementById('nj-start').value = '';
+  document.getElementById('nj-end').value = '';
+  document.getElementById('nj-desc').value = '';
+  renderJobsList();
+  updatePreview();
+}
+
+function removeJob(i) {
+  jobs.splice(i, 1);
+  renderJobsList();
+  updatePreview();
+}
+
+function renderJobsList() {
+  const list = document.getElementById('jobs-list');
+  list.innerHTML = jobs.map((j, i) => `
+    <div class="job-item">
+      <button class="job-del" onclick="removeJob(${i})">×</button>
+      <div class="job-item-title">${j.title} — ${j.company}</div>
+      <div class="job-item-sub">${j.start}${j.end ? ' → ' + j.end : ''}</div>
+    </div>
+  `).join('');
+}
+
+function g(id) { return document.getElementById(id).value.trim(); }
+
+function updatePreview() {
+  const name = g('f-name');
+  const phone = g('f-phone');
+  const email = g('f-email');
+  const suburb = g('f-suburb');
+  const linkedin = g('f-linkedin');
+  const summary = g('f-summary');
+  const skills = g('f-skills');
+  const eduDegree = g('f-edu-degree');
+  const eduSchool = g('f-edu-school');
+  const eduYear = g('f-edu-year');
+  const ref1Name = g('f-ref1-name');
+  const ref1Role = g('f-ref1-role');
+  const ref1Contact = g('f-ref1-contact');
+  const ref2Name = g('f-ref2-name');
+  const ref2Role = g('f-ref2-role');
+  const ref2Contact = g('f-ref2-contact');
+
+  if (!name && jobs.length === 0 && !summary) {
+    document.getElementById('cv-preview').innerHTML = '<div class="cv-placeholder">Fill in your details on the left and your CV will appear here in real time.</div>';
+    return;
+  }
+
+  let html = '';
+
+  // Name + contact
+  if (name) html += `<div class="cv-name">${name}</div>`;
+  let contactParts = [];
+  if (phone) contactParts.push(phone);
+  if (email) contactParts.push(`<a href="mailto:${email}">${email}</a>`);
+  if (suburb) contactParts.push(suburb);
+  if (linkedin) contactParts.push(linkedin);
+  if (contactParts.length) html += `<div class="cv-contact">${contactParts.join(' · ')}</div>`;
+
+  // Summary
+  if (summary) {
+    html += `<hr class="cv-divider"><div class="cv-section-title">Professional Summary</div>`;
+    html += `<div class="cv-summary">${summary.replace(/\n/g, '<br>')}</div>`;
+  }
+
+  // Experience
+  if (jobs.length > 0) {
+    html += `<hr class="cv-divider"><div class="cv-section-title">Work Experience</div>`;
+    jobs.forEach(j => {
+      html += `<div class="cv-job">`;
+      html += `<div class="cv-job-title">${j.title}</div>`;
+      html += `<div class="cv-job-company">${j.company}</div>`;
+      if (j.start || j.end) html += `<div class="cv-job-dates">${j.start}${j.end ? ' – ' + j.end : ''}</div>`;
+      if (j.desc) {
+        const bullets = j.desc.split('\n').filter(b => b.trim());
+        html += `<div class="cv-job-desc">` + bullets.map(b => `• ${b.trim()}`).join('<br>') + `</div>`;
+      }
+      html += `</div>`;
+    });
+  }
+
+  // Skills
+  if (skills) {
+    html += `<hr class="cv-divider"><div class="cv-section-title">Skills</div>`;
+    html += `<div class="cv-skill-list">${skills.split(',').map(s => '• ' + s.trim()).join('<br>')}</div>`;
+  }
+
+  // Education
+  if (eduDegree || eduSchool) {
+    html += `<hr class="cv-divider"><div class="cv-section-title">Education</div>`;
+    html += `<div class="cv-job">`;
+    if (eduDegree) html += `<div class="cv-job-title">${eduDegree}</div>`;
+    if (eduSchool) html += `<div class="cv-job-company">${eduSchool}</div>`;
+    if (eduYear) html += `<div class="cv-job-dates">Graduated ${eduYear}</div>`;
+    html += `</div>`;
+  }
+
+  // References
+  if (ref1Name || ref2Name) {
+    html += `<hr class="cv-divider"><div class="cv-section-title">References</div>`;
+    if (ref1Name) {
+      html += `<div class="cv-job"><div class="cv-ref"><strong>${ref1Name}</strong>`;
+      if (ref1Role) html += ` — ${ref1Role}`;
+      if (ref1Contact) html += `<br>${ref1Contact}`;
+      html += `</div></div>`;
+    }
+    if (ref2Name) {
+      html += `<div class="cv-job"><div class="cv-ref"><strong>${ref2Name}</strong>`;
+      if (ref2Role) html += ` — ${ref2Role}`;
+      if (ref2Contact) html += `<br>${ref2Contact}`;
+      html += `</div></div>`;
+    }
+  } else {
+    html += `<hr class="cv-divider"><div class="cv-section-title">References</div>`;
+    html += `<div class="cv-ref">Available on request</div>`;
+  }
+
+  document.getElementById('cv-preview').innerHTML = html;
+}
+
+function getCVText() {
+  const name = g('f-name');
+  const phone = g('f-phone');
+  const email = g('f-email');
+  const suburb = g('f-suburb');
+  const linkedin = g('f-linkedin');
+  const summary = g('f-summary');
+  const skills = g('f-skills');
+  const eduDegree = g('f-edu-degree');
+  const eduSchool = g('f-edu-school');
+  const eduYear = g('f-edu-year');
+  const ref1Name = g('f-ref1-name');
+  const ref1Role = g('f-ref1-role');
+  const ref1Contact = g('f-ref1-contact');
+  const ref2Name = g('f-ref2-name');
+  const ref2Role = g('f-ref2-role');
+  const ref2Contact = g('f-ref2-contact');
+
+  let text = '';
+  if (name) text += name + '\n';
+  let contact = [phone, email, suburb, linkedin].filter(Boolean).join(' · ');
+  if (contact) text += contact + '\n';
+  text += '\n';
+
+  if (summary) {
+    text += 'PROFESSIONAL SUMMARY\n';
+    text += '─'.repeat(40) + '\n';
+    text += summary + '\n\n';
+  }
+
+  if (jobs.length > 0) {
+    text += 'WORK EXPERIENCE\n';
+    text += '─'.repeat(40) + '\n';
+    jobs.forEach(j => {
+      text += j.title + '\n';
+      text += j.company + '\n';
+      if (j.start || j.end) text += (j.start || '') + (j.end ? ' – ' + j.end : '') + '\n';
+      if (j.desc) {
+        j.desc.split('\n').filter(b => b.trim()).forEach(b => { text += '• ' + b.trim() + '\n'; });
+      }
+      text += '\n';
+    });
+  }
+
+  if (skills) {
+    text += 'SKILLS\n';
+    text += '─'.repeat(40) + '\n';
+    skills.split(',').forEach(s => { text += '• ' + s.trim() + '\n'; });
+    text += '\n';
+  }
+
+  if (eduDegree || eduSchool) {
+    text += 'EDUCATION\n';
+    text += '─'.repeat(40) + '\n';
+    if (eduDegree) text += eduDegree + '\n';
+    if (eduSchool) text += eduSchool + '\n';
+    if (eduYear) text += 'Graduated ' + eduYear + '\n';
+    text += '\n';
+  }
+
+  text += 'REFERENCES\n';
+  text += '─'.repeat(40) + '\n';
+  if (ref1Name) {
+    text += ref1Name;
+    if (ref1Role) text += ' — ' + ref1Role;
+    text += '\n';
+    if (ref1Contact) text += ref1Contact + '\n';
+    text += '\n';
+  }
+  if (ref2Name) {
+    text += ref2Name;
+    if (ref2Role) text += ' — ' + ref2Role;
+    text += '\n';
+    if (ref2Contact) text += ref2Contact + '\n';
+  }
+  if (!ref1Name && !ref2Name) text += 'Available on request\n';
+
+  return text;
+}
+
+function copyCV() {
+  const text = getCVText();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => { btn.textContent = '📋 Copy text'; }, 2000);
+  });
+}
+
+function downloadCV() {
+  const text = getCVText();
+  const name = g('f-name').replace(/\s+/g, '-').toLowerCase() || 'cv';
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name + '-australian-cv.txt';
+  a.click(); URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
