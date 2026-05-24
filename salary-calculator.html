@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Australian Salary Calculator for Backpackers 2026 | MyArrivalGuide</title>
+<meta name="description" content="Calculate exactly what you should be paid in Australia. Minimum wage, casual loading, weekend penalty rates, public holidays. Know your rights before your first shift.">
+<link rel="canonical" href="https://myarrivalguide.com/salary-calculator.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="dark"] {
+  --bg: #141210; --bg-card: #1e1b18; --bg-soft: #252119;
+  --border: rgba(255,235,200,0.07); --border-warm: rgba(255,235,200,0.14);
+  --text: #f2ebe0; --text-muted: #a8998a; --text-faint: #5a5048;
+  --accent: #e07040; --accent-light: rgba(224,112,64,0.12); --accent-border: rgba(224,112,64,0.3);
+  --green: #5aab6e; --green-soft: rgba(90,171,110,0.12); --green-border: rgba(90,171,110,0.3);
+  --red: #e06060; --red-soft: rgba(224,96,96,0.1); --red-border: rgba(224,96,96,0.3);
+  --gold: #d4a030; --gold-soft: rgba(212,160,48,0.12);
+  --btn-text: #141210;
+}
+:root[data-theme="light"] {
+  --bg: #faf6ef; --bg-card: #ffffff; --bg-soft: #f0ece3;
+  --border: rgba(100,80,60,0.1); --border-warm: rgba(100,80,60,0.2);
+  --text: #2a2018; --text-muted: #6a5a48; --text-faint: #b0a090;
+  --accent: #c05830; --accent-light: rgba(192,88,48,0.08); --accent-border: rgba(192,88,48,0.25);
+  --green: #2e7a45; --green-soft: rgba(46,122,69,0.08); --green-border: rgba(46,122,69,0.25);
+  --red: #c04040; --red-soft: rgba(192,64,64,0.08); --red-border: rgba(192,64,64,0.25);
+  --gold: #a07820; --gold-soft: rgba(160,120,32,0.08);
+  --btn-text: #ffffff;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg); color: var(--text);
+  line-height: 1.6; font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.2s, color 0.2s;
+}
+nav {
+  border-bottom: 1px solid var(--border); padding: 0 28px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(16px);
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--text); text-decoration: none; }
+.nav-logo .dot { color: var(--accent); }
+.nav-back { font-size: 13px; color: var(--text-muted); text-decoration: none; font-weight: 500; }
+.nav-back:hover { color: var(--text); }
+.theme-btn { width: 32px; height: 32px; border-radius: 8px; background: transparent; border: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+.theme-btn svg { width: 15px; height: 15px; }
+
+.wrap { max-width: 900px; margin: 0 auto; padding: 0 28px 80px; }
+.hero { padding: 52px 0 40px; }
+.hero-eye { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+.hero-eye::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 12px; }
+.hero p { font-size: 17px; color: var(--text-muted); font-weight: 300; max-width: 560px; line-height: 1.6; }
+
+.calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+
+.input-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px;
+}
+.input-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700;
+  margin-bottom: 22px; letter-spacing: -0.3px;
+}
+
+.field { margin-bottom: 18px; }
+.field:last-child { margin-bottom: 0; }
+.field label {
+  display: block; font-size: 11px; font-weight: 600;
+  color: var(--text-faint); text-transform: uppercase;
+  letter-spacing: 0.1em; margin-bottom: 8px;
+}
+.field-input {
+  width: 100%; background: var(--bg-soft);
+  border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 12px 16px; font-size: 18px;
+  color: var(--text); font-family: 'DM Mono', monospace;
+  font-weight: 500; outline: none; transition: border-color 0.15s;
+}
+.field-input:focus { border-color: var(--accent); }
+.field-input::placeholder { color: var(--text-faint); }
+
+.option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.option-btn {
+  background: var(--bg-soft); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 12px 10px;
+  font-size: 13px; font-weight: 500; color: var(--text-muted);
+  cursor: pointer; font-family: inherit; transition: all 0.15s;
+  text-align: center;
+}
+.option-btn:hover { border-color: var(--border-warm); color: var(--text); }
+.option-btn.active { background: var(--accent-light); border-color: var(--accent-border); color: var(--accent); font-weight: 600; }
+.option-btn .opt-label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.option-btn .opt-sub { display: block; font-size: 11px; opacity: 0.7; }
+
+.calc-btn {
+  width: 100%; background: var(--accent); color: var(--btn-text);
+  border: none; border-radius: 12px; padding: 16px;
+  font-size: 16px; font-weight: 700; cursor: pointer;
+  font-family: inherit; transition: all 0.2s; margin-top: 16px;
+}
+.calc-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+
+/* RESULTS */
+.results-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; margin-bottom: 20px;
+}
+.results-header {
+  padding: 24px 28px; border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.results-header::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--green);
+}
+.results-eyebrow { font-size: 11px; font-weight: 600; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+.results-hourly {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(48px, 8vw, 72px);
+  font-weight: 700; letter-spacing: -2px; line-height: 1;
+  color: var(--green);
+}
+.results-hourly span { font-size: 28px; color: var(--text-muted); }
+.results-sub { font-size: 15px; color: var(--text-muted); margin-top: 6px; }
+
+.results-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+.results-stat {
+  padding: 20px 24px; border-right: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+}
+.results-stat:last-child { border-right: none; }
+.results-stat-label { font-size: 11px; font-weight: 600; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+.results-stat-value { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; letter-spacing: -0.5px; color: var(--text); }
+.results-stat-sub { font-size: 12px; color: var(--text-faint); margin-top: 2px; }
+
+/* BREAKDOWN */
+.breakdown { padding: 24px 28px; border-top: 1px solid var(--border); }
+.breakdown-title { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+.breakdown-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.breakdown-row:last-child { border-bottom: none; }
+.breakdown-label { color: var(--text-muted); }
+.breakdown-val { font-family: 'DM Mono', monospace; font-weight: 600; color: var(--text); }
+.breakdown-rate { font-size: 12px; color: var(--text-faint); margin-left: 8px; }
+
+/* ALERT */
+.alert {
+  border-radius: 12px; padding: 18px 22px; margin-bottom: 16px;
+  border-left: 3px solid; display: flex; gap: 14px;
+}
+.alert-warn { background: var(--red-soft); border-color: var(--red); }
+.alert-good { background: var(--green-soft); border-color: var(--green); }
+.alert-info { background: var(--accent-light); border-color: var(--accent); }
+.alert-icon { font-size: 18px; flex-shrink: 0; }
+.alert-text { font-size: 14px; color: var(--text); line-height: 1.6; }
+.alert-text strong { font-weight: 600; }
+
+.hidden { display: none; }
+
+@media (max-width: 700px) {
+  .calc-grid { grid-template-columns: 1fr; }
+  .option-grid { grid-template-columns: 1fr 1fr; }
+  .results-grid { grid-template-columns: 1fr; }
+  .results-stat { border-right: none; }
+  .wrap { padding: 0 16px 60px; }
+  nav { padding: 0 16px; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">MyArrivalGuide<span class="dot">.</span></a>
+  <div style="display:flex;gap:14px;align-items:center;">
+    <a href="/" class="nav-back">← Back to guide</a>
+    <button class="theme-btn" onclick="toggleTheme()"><svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg></button>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-eye">Free tool</div>
+    <h1>Australian Salary Calculator</h1>
+    <p>Enter your hourly rate and shift type. We'll show you exactly what you're legally owed — including casual loading and weekend penalty rates that a surprising number of employers conveniently forget to mention.</p>
+  </div>
+
+  <div class="calc-grid">
+    <div class="input-card">
+      <div class="input-card-title">Your pay details</div>
+
+      <div class="field">
+        <label>Your hourly rate (AUD)</label>
+        <input type="number" class="field-input" id="rate" placeholder="24.10" step="0.01" min="0" oninput="calculate()">
+        <div style="font-size:12px;color:var(--text-faint);margin-top:6px;">Minimum wage 2026: $24.10/hr. If you're earning less, that's illegal.</div>
+      </div>
+
+      <div class="field">
+        <label>Hours worked</label>
+        <input type="number" class="field-input" id="hours" placeholder="8" step="0.5" min="0" oninput="calculate()">
+      </div>
+
+      <div class="field">
+        <label>Employment type</label>
+        <div class="option-grid">
+          <button class="option-btn active" onclick="setOption('type','permanent',this)">
+            <span class="opt-label">Permanent</span>
+            <span class="opt-sub">Sick leave, holiday pay</span>
+          </button>
+          <button class="option-btn" onclick="setOption('type','casual',this)">
+            <span class="opt-label">Casual</span>
+            <span class="opt-sub">+25% loading on top</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Day type</label>
+        <div class="option-grid">
+          <button class="option-btn active" onclick="setOption('day','weekday',this)">
+            <span class="opt-label">Weekday</span>
+            <span class="opt-sub">Mon–Fri normal rate</span>
+          </button>
+          <button class="option-btn" onclick="setOption('day','saturday',this)">
+            <span class="opt-label">Saturday</span>
+            <span class="opt-sub">1.25–1.5x penalty</span>
+          </button>
+          <button class="option-btn" onclick="setOption('day','sunday',this)">
+            <span class="opt-label">Sunday</span>
+            <span class="opt-sub">1.5–2x penalty</span>
+          </button>
+          <button class="option-btn" onclick="setOption('day','public',this)">
+            <span class="opt-label">Public holiday</span>
+            <span class="opt-sub">2.5x penalty</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-card">
+      <div class="input-card-title">Which industry?</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:16px;line-height:1.6;">Different industries have different "Awards" — the legal documents that set minimum pay rates. Select yours for accurate results.</div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;" id="industry-btns">
+        <button class="option-btn active" onclick="setIndustry('hospitality',this)" style="text-align:left;padding:14px 16px;">
+          <span class="opt-label">🍺 Hospitality</span>
+          <span class="opt-sub">Cafes, restaurants, bars, hotels</span>
+        </button>
+        <button class="option-btn" onclick="setIndustry('retail',this)" style="text-align:left;padding:14px 16px;">
+          <span class="opt-label">🛒 Retail</span>
+          <span class="opt-sub">Shops, supermarkets, stores</span>
+        </button>
+        <button class="option-btn" onclick="setIndustry('farm',this)" style="text-align:left;padding:14px 16px;">
+          <span class="opt-label">🌾 Farm / Agriculture</span>
+          <span class="opt-sub">Picking, packing, farm labour</span>
+        </button>
+        <button class="option-btn" onclick="setIndustry('construction',this)" style="text-align:left;padding:14px 16px;">
+          <span class="opt-label">🏗️ Construction</span>
+          <span class="opt-sub">Labouring, traffic control, site work</span>
+        </button>
+        <button class="option-btn" onclick="setIndustry('cleaning',this)" style="text-align:left;padding:14px 16px;">
+          <span class="opt-label">🧹 Cleaning</span>
+          <span class="opt-sub">Commercial, hotel, residential cleaning</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="results" class="hidden">
+
+    <div id="alert-area"></div>
+
+    <div class="results-card">
+      <div class="results-header">
+        <div class="results-eyebrow">Legal minimum pay for this shift</div>
+        <div class="results-hourly" id="res-hourly">$0<span>/hr</span></div>
+        <div class="results-sub" id="res-sub"></div>
+      </div>
+      <div class="results-grid">
+        <div class="results-stat">
+          <div class="results-stat-label">Shift total</div>
+          <div class="results-stat-value" id="res-shift">$0</div>
+          <div class="results-stat-sub" id="res-hours-label">for 0 hours</div>
+        </div>
+        <div class="results-stat">
+          <div class="results-stat-label">Weekly (38hrs)</div>
+          <div class="results-stat-value" id="res-weekly">$0</div>
+          <div class="results-stat-sub">based on your rate</div>
+        </div>
+        <div class="results-stat">
+          <div class="results-stat-label">Super owed (11%)</div>
+          <div class="results-stat-value" id="res-super">$0</div>
+          <div class="results-stat-sub">on top of your wages</div>
+        </div>
+      </div>
+      <div class="breakdown">
+        <div class="breakdown-title">How we got here</div>
+        <div id="breakdown-rows"></div>
+      </div>
+    </div>
+
+    <div class="alert alert-info">
+      <div class="alert-icon">ℹ️</div>
+      <div class="alert-text">These are <strong>minimum legal rates</strong> based on the relevant Modern Award. Your actual rate may be higher — some employers pay above Award. But going below these rates is illegal and you can report it to the Fair Work Ombudsman anonymously at <strong>fairwork.gov.au</strong> or call <strong>13 13 94</strong>.</div>
+    </div>
+
+    <div class="alert alert-good">
+      <div class="alert-icon">💰</div>
+      <div class="alert-text"><strong>Don't forget super.</strong> Your employer must also pay 11% of your wages into your super fund. This is on top of what you receive. When you leave Australia, claim it all back via DASP — free money most backpackers never collect. <a href="/#step-24" style="color:var(--green)">Read more about super →</a></div>
+    </div>
+  </div>
+
+  <div class="alert alert-info" id="no-rate-msg">
+    <div class="alert-icon">👆</div>
+    <div class="alert-text">Enter your hourly rate and hours above to see your legal minimum pay. If your employer is offering you less than <strong>$24.10/hr</strong> (minimum wage 2026), that's already illegal — you don't need the calculator to know that.</div>
+  </div>
+</div>
+
+<script>
+const SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>';
+const MOON = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next); localStorage.setItem('mag-theme', next);
+  document.getElementById('theme-icon').innerHTML = next === 'dark' ? SUN : MOON;
+}
+const st = localStorage.getItem('mag-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', st);
+document.getElementById('theme-icon').innerHTML = st === 'dark' ? SUN : MOON;
+
+const MIN_WAGE = 24.10;
+let empType = 'permanent';
+let dayType = 'weekday';
+let industry = 'hospitality';
+
+// Penalty rate multipliers by industry and day type
+// [permanent_weekday, permanent_sat, permanent_sun, permanent_pub, casual_weekday, casual_sat, casual_sun, casual_pub]
+const RATES = {
+  hospitality: { label: 'Hospitality Award', sat: 1.25, sun: 1.75, pub: 2.25, casual: 1.25 },
+  retail:       { label: 'Retail Award',      sat: 1.25, sun: 2.00, pub: 2.25, casual: 1.25 },
+  farm:         { label: 'Horticulture Award', sat: 1.50, sun: 2.00, pub: 2.00, casual: 1.25 },
+  construction: { label: 'Building Award',    sat: 1.50, sun: 2.00, pub: 2.00, casual: 1.35 },
+  cleaning:     { label: 'Cleaning Award',    sat: 1.50, sun: 2.00, pub: 2.50, casual: 1.25 },
+};
+
+function setOption(group, val, btn) {
+  if (group === 'type') { empType = val; document.querySelectorAll('[onclick^="setOption(\'type\'"]').forEach(b => b.classList.remove('active')); }
+  else { dayType = val; document.querySelectorAll('[onclick^="setOption(\'day\'"]').forEach(b => b.classList.remove('active')); }
+  btn.classList.add('active');
+  calculate();
+}
+
+function setIndustry(val, btn) {
+  industry = val;
+  document.querySelectorAll('#industry-btns .option-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  calculate();
+}
+
+function fmt(n) { return '$' + n.toFixed(2); }
+
+function calculate() {
+  const rateInput = parseFloat(document.getElementById('rate').value);
+  const hoursInput = parseFloat(document.getElementById('hours').value) || 0;
+
+  if (!rateInput || rateInput <= 0) {
+    document.getElementById('results').classList.add('hidden');
+    document.getElementById('no-rate-msg').style.display = 'flex';
+    return;
+  }
+
+  document.getElementById('no-rate-msg').style.display = 'none';
+
+  const ind = RATES[industry];
+  const baseRate = Math.max(rateInput, MIN_WAGE);
+  const casualMulti = empType === 'casual' ? ind.casual : 1;
+  let dayMulti = 1;
+  let dayLabel = 'Weekday';
+  if (dayType === 'saturday') { dayMulti = ind.sat; dayLabel = 'Saturday'; }
+  else if (dayType === 'sunday') { dayMulti = ind.sun; dayLabel = 'Sunday'; }
+  else if (dayType === 'public') { dayMulti = ind.pub; dayLabel = 'Public holiday'; }
+
+  const effectiveRate = baseRate * casualMulti * dayMulti;
+  const shiftTotal = effectiveRate * hoursInput;
+  const weekly = effectiveRate * 38;
+  const superAmt = shiftTotal * 0.11;
+
+  document.getElementById('res-hourly').innerHTML = `${fmt(effectiveRate)}<span>/hr</span>`;
+  document.getElementById('res-sub').textContent = `${ind.label} · ${empType === 'casual' ? 'Casual' : 'Permanent'} · ${dayLabel}`;
+  document.getElementById('res-shift').textContent = fmt(shiftTotal);
+  document.getElementById('res-hours-label').textContent = `for ${hoursInput} hours`;
+  document.getElementById('res-weekly').textContent = fmt(weekly);
+  document.getElementById('res-super').textContent = fmt(superAmt);
+
+  // Breakdown
+  const rows = [];
+  rows.push({ label: 'Your base rate', val: fmt(rateInput), note: rateInput < MIN_WAGE ? '⚠️ Below minimum — using $24.10' : '' });
+  if (rateInput < MIN_WAGE) rows.push({ label: 'Legal minimum wage', val: fmt(MIN_WAGE), note: 'Applied automatically' });
+  if (empType === 'casual') rows.push({ label: `Casual loading (+${Math.round((ind.casual-1)*100)}%)`, val: fmt(Math.max(rateInput,MIN_WAGE) * ind.casual), note: 'Because no sick/holiday pay' });
+  if (dayMulti > 1) rows.push({ label: `${dayLabel} penalty rate (×${dayMulti})`, val: fmt(effectiveRate), note: `${ind.label}` });
+  rows.push({ label: `Shift total (${hoursInput}h × ${fmt(effectiveRate)})`, val: fmt(shiftTotal), note: '' });
+  rows.push({ label: `Super owed (11% on top)`, val: fmt(superAmt), note: 'Employer pays this separately' });
+
+  document.getElementById('breakdown-rows').innerHTML = rows.map(r =>
+    `<div class="breakdown-row">
+      <span class="breakdown-label">${r.label} ${r.note ? `<span class="breakdown-rate">${r.note}</span>` : ''}</span>
+      <span class="breakdown-val">${r.val}</span>
+    </div>`
+  ).join('');
+
+  // Alert
+  const alertArea = document.getElementById('alert-area');
+  if (rateInput < MIN_WAGE) {
+    alertArea.innerHTML = `<div class="alert alert-warn"><div class="alert-icon">⚠️</div><div class="alert-text"><strong>You're being underpaid.</strong> The rate you entered ($${rateInput}/hr) is below the legal minimum wage of $24.10/hr. This is illegal. You can report your employer to the Fair Work Ombudsman at fairwork.gov.au — even anonymously, even after you've left the job.</div></div>`;
+  } else if (rateInput === MIN_WAGE && empType === 'casual' && dayType === 'weekday') {
+    alertArea.innerHTML = `<div class="alert alert-info"><div class="alert-icon">ℹ️</div><div class="alert-text">You're on minimum wage with casual loading. That's legal but tight. If you've been working for the same employer for months, they may owe you a review — some Awards have higher rates for experienced workers.</div></div>`;
+  } else {
+    alertArea.innerHTML = `<div class="alert alert-good"><div class="alert-icon">✅</div><div class="alert-text">Your rate looks above the legal minimum for this industry and shift type. Nice one.</div></div>`;
+  }
+
+  document.getElementById('results').classList.remove('hidden');
+}
+</script>
+</body>
+</html>
