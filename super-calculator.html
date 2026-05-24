@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Superannuation Calculator for Backpackers Australia 2026 | MyArrivalGuide</title>
+<meta name="description" content="Calculate how much superannuation you've earned in Australia and exactly what you'll get back when you claim DASP when you leave. Free tool for Working Holiday Visa holders.">
+<link rel="canonical" href="https://myarrivalguide.com/super-calculator.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="dark"] {
+  --bg: #141210; --bg-card: #1e1b18; --bg-soft: #252119;
+  --border: rgba(255,235,200,0.07); --border-warm: rgba(255,235,200,0.14);
+  --text: #f2ebe0; --text-muted: #a8998a; --text-faint: #5a5048;
+  --accent: #e07040; --accent-light: rgba(224,112,64,0.12); --accent-border: rgba(224,112,64,0.3);
+  --green: #5aab6e; --green-soft: rgba(90,171,110,0.12); --green-border: rgba(90,171,110,0.3);
+  --gold: #d4a030; --gold-soft: rgba(212,160,48,0.15);
+  --btn-text: #141210;
+}
+:root[data-theme="light"] {
+  --bg: #faf6ef; --bg-card: #ffffff; --bg-soft: #f0ece3;
+  --border: rgba(100,80,60,0.1); --border-warm: rgba(100,80,60,0.2);
+  --text: #2a2018; --text-muted: #6a5a48; --text-faint: #b0a090;
+  --accent: #c05830; --accent-light: rgba(192,88,48,0.08); --accent-border: rgba(192,88,48,0.25);
+  --green: #2e7a45; --green-soft: rgba(46,122,69,0.08); --green-border: rgba(46,122,69,0.25);
+  --gold: #a07820; --gold-soft: rgba(160,120,32,0.1);
+  --btn-text: #ffffff;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; transition: background 0.2s, color 0.2s; }
+nav { border-bottom: 1px solid var(--border); padding: 0 28px; height: 60px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(16px); }
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--text); text-decoration: none; }
+.nav-logo .dot { color: var(--accent); }
+.nav-back { font-size: 13px; color: var(--text-muted); text-decoration: none; font-weight: 500; }
+.nav-back:hover { color: var(--text); }
+.theme-btn { width: 32px; height: 32px; border-radius: 8px; background: transparent; border: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+.theme-btn svg { width: 15px; height: 15px; }
+
+.wrap { max-width: 800px; margin: 0 auto; padding: 0 28px 80px; }
+.hero { padding: 52px 0 40px; }
+.hero-eye { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+.hero-eye::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 12px; }
+.hero p { font-size: 17px; color: var(--text-muted); font-weight: 300; max-width: 560px; line-height: 1.6; }
+
+.explainer {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 22px 26px; margin-bottom: 24px;
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 0;
+}
+.exp-item { padding: 0 20px; border-right: 1px solid var(--border); }
+.exp-item:first-child { padding-left: 0; }
+.exp-item:last-child { border-right: none; }
+.exp-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--accent); letter-spacing: -1px; margin-bottom: 4px; }
+.exp-label { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
+
+.input-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 20px; }
+.input-card-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; margin-bottom: 22px; letter-spacing: -0.3px; }
+
+.jobs-section { margin-bottom: 20px; }
+.job-row-input { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; align-items: end; margin-bottom: 10px; }
+.job-row-input label { display: block; font-size: 11px; font-weight: 600; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.fi { width: 100%; background: var(--bg-soft); border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 15px; color: var(--text); font-family: inherit; outline: none; transition: border-color 0.15s; }
+.fi:focus { border-color: var(--accent); }
+.fi::placeholder { color: var(--text-faint); }
+.add-job-btn { background: var(--accent-light); color: var(--accent); border: 1px dashed var(--accent-border); border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; white-space: nowrap; height: 42px; transition: all 0.15s; }
+.add-job-btn:hover { background: var(--accent); color: var(--btn-text); border-style: solid; }
+
+.job-item-display { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 14px; }
+.job-item-info { flex: 1; }
+.job-item-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.job-item-sub { font-size: 12px; color: var(--text-faint); margin-top: 2px; }
+.job-item-super { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 600; color: var(--green); }
+.job-del { background: none; border: none; color: var(--text-faint); cursor: pointer; font-size: 20px; padding: 0 4px; transition: color 0.15s; }
+.job-del:hover { color: #e06060; }
+
+.quick-input { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 6px; }
+.field { margin-bottom: 0; }
+.field label { display: block; font-size: 11px; font-weight: 600; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+
+.calc-btn { width: 100%; background: var(--accent); color: var(--btn-text); border: none; border-radius: 12px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.2s; margin-top: 4px; }
+.calc-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+
+/* RESULTS */
+.results-hero { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 16px; }
+.results-top { padding: 32px 32px 24px; text-align: center; position: relative; }
+.results-top::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--green), var(--accent)); }
+.results-eyebrow { font-size: 12px; font-weight: 600; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; }
+.results-big { font-family: 'Playfair Display', serif; font-size: clamp(52px, 10vw, 80px); font-weight: 700; letter-spacing: -2px; line-height: 1; color: var(--green); margin-bottom: 6px; }
+.results-big-sub { font-size: 16px; color: var(--text-muted); }
+
+.results-row { display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid var(--border); }
+.res-stat { padding: 20px; border-right: 1px solid var(--border); text-align: center; }
+.res-stat:last-child { border-right: none; }
+.res-stat-label { font-size: 11px; font-weight: 600; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+.res-stat-val { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+.res-stat-sub { font-size: 11px; color: var(--text-faint); margin-top: 3px; }
+.val-green { color: var(--green); }
+.val-gold { color: var(--gold); }
+.val-accent { color: var(--accent); }
+
+.timeline { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; margin-bottom: 16px; }
+.timeline-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 18px; letter-spacing: -0.3px; }
+.timeline-step { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
+.timeline-step:last-child { margin-bottom: 0; }
+.t-circle { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+.t-done { background: var(--green-soft); color: var(--green); border: 1px solid var(--green-border); }
+.t-pending { background: var(--gold-soft); color: var(--gold); border: 1px solid rgba(212,160,48,0.3); }
+.t-future { background: var(--bg-soft); color: var(--text-faint); border: 1px solid var(--border); }
+.t-body {}
+.t-label { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.t-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+.alert { border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; border-left: 3px solid; display: flex; gap: 14px; }
+.alert-warn { background: rgba(224,96,96,0.1); border-color: #e06060; }
+.alert-good { background: var(--green-soft); border-color: var(--green); }
+.alert-info { background: var(--accent-light); border-color: var(--accent); }
+.alert-icon { font-size: 18px; flex-shrink: 0; }
+.alert-text { font-size: 14px; color: var(--text); line-height: 1.6; }
+.alert-text strong { font-weight: 600; }
+.alert-text a { color: var(--accent); }
+
+.hidden { display: none; }
+
+@media (max-width: 600px) {
+  .explainer { grid-template-columns: 1fr; gap: 16px; }
+  .exp-item { padding: 0; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+  .exp-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .job-row-input { grid-template-columns: 1fr 1fr; }
+  .results-row { grid-template-columns: 1fr; }
+  .res-stat { border-right: none; border-bottom: 1px solid var(--border); }
+  .quick-input { grid-template-columns: 1fr; }
+  .wrap { padding: 0 16px 60px; }
+  nav { padding: 0 16px; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">MyArrivalGuide<span class="dot">.</span></a>
+  <div style="display:flex;gap:14px;align-items:center;">
+    <a href="/" class="nav-back">← Back to guide</a>
+    <button class="theme-btn" onclick="toggleTheme()"><svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg></button>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-eye">Free tool</div>
+    <h1>Superannuation Calculator</h1>
+    <p>How much super have you earned? How much will you get back when you leave Australia? This calculator gives you the real numbers — so you don't leave thousands of dollars behind when you fly home.</p>
+  </div>
+
+  <div class="explainer">
+    <div class="exp-item">
+      <div class="exp-num">11%</div>
+      <div class="exp-label">Your employer pays this on top of your wages. Not from your wages. Extra.</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-num">65%</div>
+      <div class="exp-label">Tax rate on DASP for WHV holders. High, but 35% of something beats 0% of nothing.</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-num">$1B+</div>
+      <div class="exp-label">Estimated unclaimed super sitting in Australian funds belonging to departed backpackers.</div>
+    </div>
+  </div>
+
+  <div class="input-card">
+    <div class="input-card-title">Add your jobs</div>
+
+    <div id="jobs-display"></div>
+
+    <div class="job-row-input">
+      <div class="field">
+        <label>Employer name</label>
+        <input type="text" class="fi" id="nj-name" placeholder="Sunrise Farm QLD">
+      </div>
+      <div class="field">
+        <label>Gross wages ($)</label>
+        <input type="number" class="fi" id="nj-wages" placeholder="4500" min="0">
+      </div>
+      <div class="field">
+        <label>Weeks worked</label>
+        <input type="number" class="fi" id="nj-weeks" placeholder="6" min="0" step="0.5" oninput="updateWagesFromWeeks()">
+      </div>
+      <button class="add-job-btn" onclick="addJob()">+ Add</button>
+    </div>
+    <div style="font-size:12px;color:var(--text-faint);margin-top:4px;margin-bottom:20px;">Or enter weeks worked — we'll estimate wages at $700/week. Adjust gross wages if you know the exact amount.</div>
+
+    <div class="quick-input">
+      <div class="field">
+        <label>Or enter total wages earned</label>
+        <input type="number" class="fi" id="total-wages" placeholder="15000" min="0" oninput="calculateFromTotal()">
+      </div>
+      <div class="field">
+        <label>Approximate months worked</label>
+        <input type="number" class="fi" id="total-months" placeholder="6" min="0" step="0.5">
+      </div>
+    </div>
+
+    <button class="calc-btn" onclick="calculate()">Calculate my super →</button>
+  </div>
+
+  <div id="results" class="hidden">
+
+    <div class="results-hero">
+      <div class="results-top">
+        <div class="results-eyebrow">Total superannuation earned</div>
+        <div class="results-big" id="res-total-super">$0</div>
+        <div class="results-big-sub">sitting in an Australian super fund with your name on it</div>
+      </div>
+      <div class="results-row">
+        <div class="res-stat">
+          <div class="res-stat-label">Total wages earned</div>
+          <div class="res-stat-val" id="res-wages">$0</div>
+          <div class="res-stat-sub">gross income</div>
+        </div>
+        <div class="res-stat">
+          <div class="res-stat-label">Super earned (11%)</div>
+          <div class="res-stat-val val-green" id="res-super-earned">$0</div>
+          <div class="res-stat-sub">employer's obligation</div>
+        </div>
+        <div class="res-stat">
+          <div class="res-stat-label">You get back (DASP)</div>
+          <div class="res-stat-val val-accent" id="res-dasp">$0</div>
+          <div class="res-stat-sub">after 65% tax</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-title">How to claim your super back</div>
+      <div class="timeline-step">
+        <div class="t-circle t-done">✓</div>
+        <div class="t-body">
+          <div class="t-label">Work in Australia and earn super</div>
+          <div class="t-desc">Your employer pays 11% of your wages into your nominated super fund every quarter. Check your payslips to confirm they're actually doing it.</div>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="t-circle t-pending">2</div>
+        <div class="t-body">
+          <div class="t-label">Leave Australia permanently</div>
+          <div class="t-desc">Your visa must have expired or be expired/cancelled. You can't claim DASP while still in Australia on a valid visa.</div>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="t-circle t-future">3</div>
+        <div class="t-body">
+          <div class="t-label">Apply for DASP online via ATO</div>
+          <div class="t-desc">Go to ato.gov.au and search "DASP". You'll need your super fund name and member number. The process takes about 20 minutes.</div>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="t-circle t-future">4</div>
+        <div class="t-body">
+          <div class="t-label">Money lands in your account</div>
+          <div class="t-desc">After the 65% tax is deducted, the remaining amount gets paid to your nominated bank account. Usually processed within 28 days.</div>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="t-circle t-future">⚠️</div>
+        <div class="t-body">
+          <div class="t-label">Do NOT wait too long</div>
+          <div class="t-desc">If you don't claim within a certain period, unclaimed super gets transferred to the ATO as "lost super". It doesn't disappear completely but it becomes significantly harder to retrieve.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-good">
+      <div class="alert-icon">💡</div>
+      <div class="alert-text"><strong>Before you leave:</strong> Log into your super fund account and make sure your address and contact details are updated. Lost super often stays lost because the fund can't contact the person it belongs to.</div>
+    </div>
+
+    <div class="alert alert-info">
+      <div class="alert-icon">🔍</div>
+      <div class="alert-text"><strong>Lost super from previous jobs?</strong> If you worked multiple jobs and didn't always use the same super fund, you may have super scattered across multiple funds. Check the ATO's "Find my super" tool on myGov — it searches all registered funds for your TFN. Free, takes 2 minutes.</div>
+    </div>
+
+    <div class="alert alert-warn">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-text"><strong>Super not showing on your payslip?</strong> Employers are legally required to pay super. If your payslip shows no super contributions after 3+ months, your employer may be pocketing it. <strong>Report it to the ATO</strong> — they take this seriously and will chase it on your behalf.</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>';
+const MOON = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next); localStorage.setItem('mag-theme', next);
+  document.getElementById('theme-icon').innerHTML = next === 'dark' ? SUN : MOON;
+}
+const st = localStorage.getItem('mag-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', st);
+document.getElementById('theme-icon').innerHTML = st === 'dark' ? SUN : MOON;
+
+let jobs = [];
+const SUPER_RATE = 0.11;
+const DASP_TAX = 0.65;
+const fmt = n => '$' + Math.round(n).toLocaleString();
+
+function updateWagesFromWeeks() {
+  const weeks = parseFloat(document.getElementById('nj-weeks').value) || 0;
+  if (weeks > 0) document.getElementById('nj-wages').value = Math.round(weeks * 700);
+}
+
+function addJob() {
+  const name = document.getElementById('nj-name').value.trim() || 'Unnamed employer';
+  const wages = parseFloat(document.getElementById('nj-wages').value) || 0;
+  if (!wages) { alert('Please enter the gross wages or weeks worked.'); return; }
+  jobs.push({ name, wages });
+  document.getElementById('nj-name').value = '';
+  document.getElementById('nj-wages').value = '';
+  document.getElementById('nj-weeks').value = '';
+  renderJobs();
+}
+
+function removeJob(i) { jobs.splice(i, 1); renderJobs(); }
+
+function renderJobs() {
+  const el = document.getElementById('jobs-display');
+  el.innerHTML = jobs.map((j, i) => `
+    <div class="job-item-display">
+      <div class="job-item-info">
+        <div class="job-item-name">${j.name}</div>
+        <div class="job-item-sub">Wages: ${fmt(j.wages)} · Super: ${fmt(j.wages * SUPER_RATE)}</div>
+      </div>
+      <div class="job-item-super">${fmt(j.wages * SUPER_RATE)}</div>
+      <button class="job-del" onclick="removeJob(${i})">×</button>
+    </div>
+  `).join('');
+}
+
+function calculateFromTotal() {
+  const total = parseFloat(document.getElementById('total-wages').value) || 0;
+  if (total > 0) showResults(total);
+}
+
+function calculate() {
+  const totalWagesInput = parseFloat(document.getElementById('total-wages').value) || 0;
+  const jobWages = jobs.reduce((s, j) => s + j.wages, 0);
+  const total = jobWages || totalWagesInput;
+  if (!total) { alert('Please add some jobs or enter your total wages earned.'); return; }
+  showResults(total);
+}
+
+function showResults(totalWages) {
+  const superEarned = totalWages * SUPER_RATE;
+  const dasp = superEarned * (1 - DASP_TAX);
+
+  document.getElementById('res-total-super').textContent = fmt(superEarned);
+  document.getElementById('res-wages').textContent = fmt(totalWages);
+  document.getElementById('res-super-earned').textContent = fmt(superEarned);
+  document.getElementById('res-dasp').textContent = fmt(dasp);
+
+  document.getElementById('results').classList.remove('hidden');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+</body>
+</html>
