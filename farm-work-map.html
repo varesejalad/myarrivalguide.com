@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Australia Farm Work Map 2026 — Find Farm Work by Region & Season | MyArrivalGuide</title>
+<meta name="description" content="Interactive map of farm work and fruit picking seasons across Australia. Find out where to go and when for your 88 days. Updated 2026.">
+<link rel="canonical" href="https://myarrivalguide.com/farm-work-map.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="dark"] {
+  --bg: #141210; --bg-card: #1e1b18; --bg-soft: #252119;
+  --border: rgba(255,235,200,0.07); --border-warm: rgba(255,235,200,0.14);
+  --text: #f2ebe0; --text-muted: #a8998a; --text-faint: #5a5048;
+  --accent: #e07040; --accent-light: rgba(224,112,64,0.12); --accent-border: rgba(224,112,64,0.3);
+  --green: #5aab6e; --green-soft: rgba(90,171,110,0.15); --green-border: rgba(90,171,110,0.3);
+  --gold: #d4a030; --gold-soft: rgba(212,160,48,0.15);
+  --btn-text: #141210;
+  --map-bg: #1a1714;
+  --map-land: #2a2520;
+  --map-hover: #3a3028;
+  --map-active: #e07040;
+  --map-water: #141210;
+}
+:root[data-theme="light"] {
+  --bg: #faf6ef; --bg-card: #ffffff; --bg-soft: #f0ece3;
+  --border: rgba(100,80,60,0.1); --border-warm: rgba(100,80,60,0.2);
+  --text: #2a2018; --text-muted: #6a5a48; --text-faint: #b0a090;
+  --accent: #c05830; --accent-light: rgba(192,88,48,0.08); --accent-border: rgba(192,88,48,0.25);
+  --green: #2e7a45; --green-soft: rgba(46,122,69,0.1); --green-border: rgba(46,122,69,0.3);
+  --gold: #a07820; --gold-soft: rgba(160,120,32,0.1);
+  --btn-text: #ffffff;
+  --map-bg: #e8e0d0;
+  --map-land: #d4c8b0;
+  --map-hover: #c4b89a;
+  --map-active: #c05830;
+  --map-water: #e8e0d0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg); color: var(--text);
+  line-height: 1.6; font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  transition: background 0.2s, color 0.2s;
+}
+
+nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(16px);
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--text); text-decoration: none; }
+.nav-logo .dot { color: var(--accent); }
+.nav-right { display: flex; gap: 14px; align-items: center; }
+.nav-back { font-size: 13px; color: var(--text-muted); text-decoration: none; font-weight: 500; }
+.nav-back:hover { color: var(--text); }
+.theme-btn { width: 32px; height: 32px; border-radius: 8px; background: transparent; border: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: all 0.15s; }
+.theme-btn svg { width: 15px; height: 15px; }
+
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px 80px; }
+
+.hero { padding: 52px 0 40px; }
+.hero-eye { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+.hero-eye::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 12px; }
+.hero p { font-size: 17px; color: var(--text-muted); font-weight: 300; max-width: 580px; line-height: 1.6; }
+
+/* MONTH SELECTOR */
+.month-strip {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  margin-bottom: 28px; padding: 16px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.month-label { font-size: 11px; font-weight: 600; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.1em; width: 100%; margin-bottom: 6px; }
+.month-btn {
+  flex: 1; min-width: 60px;
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text-muted); padding: 8px 4px;
+  border-radius: 8px; font-size: 12px; font-weight: 500;
+  cursor: pointer; font-family: inherit;
+  transition: all 0.15s; text-align: center;
+}
+.month-btn:hover { border-color: var(--border-warm); color: var(--text); }
+.month-btn.active { background: var(--accent); color: var(--btn-text); border-color: var(--accent); font-weight: 700; }
+.month-btn .month-short { display: block; font-size: 13px; font-weight: 600; }
+.month-btn .month-indicator { display: block; font-size: 9px; margin-top: 2px; }
+
+/* LAYOUT */
+.map-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 20px;
+  align-items: start;
+}
+
+/* MAP */
+.map-container {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  position: relative;
+}
+.map-title-bar {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.map-title { font-size: 13px; font-weight: 600; color: var(--text-muted); }
+.map-hint { font-size: 11px; color: var(--text-faint); }
+.map-svg-wrap { padding: 16px; }
+
+svg#aus-map {
+  width: 100%; height: auto; display: block;
+}
+
+/* Region paths */
+.region {
+  fill: var(--map-land);
+  stroke: var(--map-bg);
+  stroke-width: 1.5;
+  cursor: pointer;
+  transition: fill 0.2s;
+}
+.region:hover { fill: var(--map-hover); }
+.region.active { fill: var(--map-active); }
+.region.has-work { fill: #3a5a30; }
+.region.has-work:hover { fill: #4a7040; }
+.region.has-work.active { fill: var(--map-active); }
+.region.peak-work { fill: #5aab6e; }
+.region.peak-work:hover { fill: #6abb7e; }
+.region.peak-work.active { fill: var(--map-active); }
+
+/* Region labels on map */
+.region-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 500;
+  fill: rgba(255,235,200,0.4);
+  pointer-events: none;
+  text-anchor: middle;
+}
+:root[data-theme="light"] .region-label { fill: rgba(60,40,20,0.4); }
+
+/* Map legend */
+.map-legend {
+  display: flex; gap: 16px; padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-muted); }
+.legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+.dot-none { background: var(--map-land); }
+.dot-some { background: #3a5a30; }
+.dot-peak { background: #5aab6e; }
+.dot-active { background: var(--accent); }
+
+/* DETAIL PANEL */
+.detail-panel {
+  position: sticky; top: 80px;
+}
+.detail-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+}
+.detail-placeholder {
+  padding: 40px 28px; text-align: center;
+}
+.detail-placeholder-icon { font-size: 40px; margin-bottom: 14px; display: block; }
+.detail-placeholder-text { font-size: 14px; color: var(--text-faint); line-height: 1.6; }
+
+.detail-header {
+  padding: 24px 24px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.detail-region-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px; font-weight: 700;
+  letter-spacing: -0.5px; margin-bottom: 4px;
+}
+.detail-state { font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; }
+.detail-status {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 12px; padding: 6px 14px;
+  border-radius: 100px; font-size: 12px; font-weight: 600;
+}
+.status-peak { background: var(--green-soft); color: var(--green); border: 1px solid var(--green-border); }
+.status-some { background: var(--gold-soft); color: var(--gold); border: 1px solid rgba(212,160,48,0.3); }
+.status-none { background: var(--bg-soft); color: var(--text-faint); border: 1px solid var(--border); }
+
+.detail-body { padding: 20px 24px; }
+
+.detail-section { margin-bottom: 20px; }
+.detail-section:last-child { margin-bottom: 0; }
+.detail-section-label {
+  font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--text-faint);
+  margin-bottom: 10px;
+}
+.crop-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.crop-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg-soft); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 12px;
+  font-size: 13px; color: var(--text);
+}
+.crop-pill.active { background: var(--green-soft); border-color: var(--green-border); color: var(--green); }
+.crop-pill .crop-emoji { font-size: 14px; }
+
+.season-bar {
+  display: flex; gap: 3px; margin-top: 4px;
+}
+.season-month {
+  flex: 1; height: 6px; border-radius: 3px;
+  background: var(--bg-soft);
+  position: relative;
+}
+.season-month.active { background: var(--green); }
+.season-month.peak { background: var(--accent); }
+.season-months-labels {
+  display: flex; gap: 3px; margin-top: 4px;
+}
+.season-month-label {
+  flex: 1; font-family: 'DM Mono', monospace;
+  font-size: 8px; color: var(--text-faint);
+  text-align: center;
+}
+
+.detail-tip {
+  background: var(--accent-light); border: 1px solid var(--accent-border);
+  border-radius: 10px; padding: 14px 16px;
+  font-size: 13px; color: var(--text-muted);
+  line-height: 1.55; margin-top: 16px;
+}
+.detail-tip strong { color: var(--accent); }
+
+.detail-links { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+.detail-link {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg-soft); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 14px;
+  text-decoration: none; transition: all 0.15s;
+  font-size: 13px; color: var(--text);
+}
+.detail-link:hover { border-color: var(--border-warm); }
+.detail-link-arrow { color: var(--accent); font-size: 16px; }
+
+/* SEASON OVERVIEW */
+.overview-strip {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px 24px; margin-top: 20px;
+}
+.overview-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.3px;
+}
+.overview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+.overview-region {
+  background: var(--bg-soft); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px;
+  cursor: pointer; transition: all 0.15s;
+}
+.overview-region:hover { border-color: var(--border-warm); transform: translateY(-1px); }
+.overview-region.peak { border-color: var(--green-border); background: var(--green-soft); }
+.overview-region-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.overview-region-state { font-size: 11px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+.overview-crops { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+.overview-status { font-size: 11px; font-weight: 600; margin-top: 6px; }
+.status-text-peak { color: var(--green); }
+.status-text-some { color: var(--gold); }
+.status-text-none { color: var(--text-faint); }
+
+@media (max-width: 900px) {
+  .map-layout { grid-template-columns: 1fr; }
+  .detail-panel { position: static; }
+  .month-btn .month-indicator { display: none; }
+}
+@media (max-width: 600px) {
+  .wrap { padding: 0 16px 60px; }
+  nav { padding: 0 16px; }
+  .hero { padding: 36px 0 28px; }
+  .month-btn { min-width: 40px; padding: 6px 2px; }
+  .month-btn .month-short { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">MyArrivalGuide<span class="dot">.</span></a>
+  <div class="nav-right">
+    <a href="/" class="nav-back">← Back to guide</a>
+    <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-eye">Free tool</div>
+    <h1>Australia Farm Work Map</h1>
+    <p>Where to go and when. Select a month to see which regions are in peak season, what's being harvested, and exactly what to expect when you get there.</p>
+  </div>
+
+  <!-- MONTH SELECTOR -->
+  <div class="month-strip">
+    <div class="month-label">Select month to see active regions</div>
+    <button class="month-btn" data-month="0" onclick="setMonth(0, this)"><span class="month-short">Jan</span><span class="month-indicator">☀️</span></button>
+    <button class="month-btn" data-month="1" onclick="setMonth(1, this)"><span class="month-short">Feb</span><span class="month-indicator">☀️</span></button>
+    <button class="month-btn" data-month="2" onclick="setMonth(2, this)"><span class="month-short">Mar</span><span class="month-indicator">🍂</span></button>
+    <button class="month-btn" data-month="3" onclick="setMonth(3, this)"><span class="month-short">Apr</span><span class="month-indicator">🍂</span></button>
+    <button class="month-btn" data-month="4" onclick="setMonth(4, this)"><span class="month-short">May</span><span class="month-indicator">❄️</span></button>
+    <button class="month-btn" data-month="5" onclick="setMonth(5, this)"><span class="month-short">Jun</span><span class="month-indicator">❄️</span></button>
+    <button class="month-btn" data-month="6" onclick="setMonth(6, this)"><span class="month-short">Jul</span><span class="month-indicator">❄️</span></button>
+    <button class="month-btn" data-month="7" onclick="setMonth(7, this)"><span class="month-short">Aug</span><span class="month-indicator">🌱</span></button>
+    <button class="month-btn" data-month="8" onclick="setMonth(8, this)"><span class="month-short">Sep</span><span class="month-indicator">🌱</span></button>
+    <button class="month-btn" data-month="9" onclick="setMonth(9, this)"><span class="month-short">Oct</span><span class="month-indicator">🌸</span></button>
+    <button class="month-btn" data-month="10" onclick="setMonth(10, this)"><span class="month-short">Nov</span><span class="month-indicator">☀️</span></button>
+    <button class="month-btn" data-month="11" onclick="setMonth(11, this)"><span class="month-short">Dec</span><span class="month-indicator">☀️</span></button>
+  </div>
+
+  <div class="map-layout">
+
+    <!-- MAP -->
+    <div>
+      <div class="map-container">
+        <div class="map-title-bar">
+          <div class="map-title">Click any region to see details</div>
+          <div class="map-hint" id="map-month-label">All months</div>
+        </div>
+        <div class="map-svg-wrap">
+          <svg id="aus-map" viewBox="0 0 800 650" xmlns="http://www.w3.org/2000/svg">
+            <!-- Western Australia -->
+            <path id="map-wa" class="region" onclick="selectRegion('wa')"
+              d="M 80 80 L 320 80 L 320 200 L 340 220 L 340 480 L 280 520 L 200 540 L 120 500 L 70 420 L 60 300 L 80 200 Z"/>
+            <text class="region-label" x="195" y="290">WESTERN</text>
+            <text class="region-label" x="195" y="302">AUSTRALIA</text>
+
+            <!-- Northern Territory -->
+            <path id="map-nt" class="region" onclick="selectRegion('nt')"
+              d="M 320 80 L 490 80 L 490 340 L 340 340 L 340 220 L 320 200 Z"/>
+            <text class="region-label" x="405" y="210">NT</text>
+
+            <!-- Queensland -->
+            <path id="map-qld" class="region" onclick="selectRegion('qld')"
+              d="M 490 80 L 670 80 L 700 160 L 720 260 L 700 360 L 650 420 L 580 440 L 530 400 L 490 340 Z"/>
+            <text class="region-label" x="590" y="240">QUEENSLAND</text>
+
+            <!-- South Australia -->
+            <path id="map-sa" class="region" onclick="selectRegion('sa')"
+              d="M 340 340 L 490 340 L 530 400 L 500 460 L 460 500 L 380 520 L 340 480 Z"/>
+            <text class="region-label" x="425" y="420">SA</text>
+
+            <!-- New South Wales -->
+            <path id="map-nsw" class="region" onclick="selectRegion('nsw')"
+              d="M 490 340 L 650 420 L 660 480 L 620 520 L 580 540 L 520 530 L 500 460 L 530 400 Z"/>
+            <text class="region-label" x="575" y="460">NSW</text>
+
+            <!-- Victoria -->
+            <path id="map-vic" class="region" onclick="selectRegion('vic')"
+              d="M 500 460 L 520 530 L 580 540 L 600 560 L 540 580 L 470 570 L 430 550 L 420 520 L 460 500 Z"/>
+            <text class="region-label" x="515" y="540">VIC</text>
+
+            <!-- Tasmania -->
+            <path id="map-tas" class="region" onclick="selectRegion('tas')"
+              d="M 510 610 L 560 600 L 580 620 L 570 640 L 520 645 L 500 630 Z"/>
+            <text class="region-label" x="540" y="628">TAS</text>
+
+            <!-- Bundaberg label -->
+            <circle cx="660" cy="330" r="5" fill="var(--accent)" opacity="0.7" pointer-events="none"/>
+            <text class="region-label" x="680" y="328" font-size="8" fill="rgba(224,112,64,0.8)" text-anchor="start">Bundaberg</text>
+
+            <!-- Mildura label -->
+            <circle cx="492" cy="480" r="4" fill="var(--gold)" opacity="0.6" pointer-events="none"/>
+            <text class="region-label" x="475" y="496" font-size="8" fill="rgba(212,160,48,0.7)" text-anchor="middle">Mildura</text>
+
+            <!-- Carnarvon label -->
+            <circle cx="108" cy="320" r="4" fill="var(--green)" opacity="0.6" pointer-events="none"/>
+            <text class="region-label" x="108" y="338" font-size="8" fill="rgba(90,171,110,0.7)" text-anchor="middle">Carnarvon</text>
+
+            <!-- Darwin label -->
+            <circle cx="410" cy="100" r="4" fill="var(--gold)" opacity="0.6" pointer-events="none"/>
+            <text class="region-label" x="410" y="92" font-size="8" fill="rgba(212,160,48,0.7)" text-anchor="middle">Darwin</text>
+          </svg>
+        </div>
+        <div class="map-legend">
+          <div class="legend-item"><div class="legend-dot dot-none"></div>Limited/no work</div>
+          <div class="legend-item"><div class="legend-dot dot-some"></div>Some work available</div>
+          <div class="legend-item"><div class="legend-dot dot-peak"></div>Peak season</div>
+          <div class="legend-item"><div class="legend-dot dot-active"></div>Selected</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAIL PANEL -->
+    <div class="detail-panel">
+      <div class="detail-card" id="detail-card">
+        <div class="detail-placeholder" id="detail-placeholder">
+          <span class="detail-placeholder-icon">🗺️</span>
+          <div class="detail-placeholder-text">Click any state on the map to see what farm work is available, what crops are being picked, and what to expect when you get there.</div>
+        </div>
+        <div id="detail-content" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OVERVIEW GRID -->
+  <div class="overview-strip" id="overview-strip">
+    <div class="overview-title" id="overview-title">All regions at a glance</div>
+    <div class="overview-grid" id="overview-grid"></div>
+  </div>
+
+</div>
+
+<script>
+const SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>';
+const MOON = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('mag-theme', next);
+  document.getElementById('theme-icon').innerHTML = next === 'dark' ? SUN : MOON;
+}
+const savedTheme = localStorage.getItem('mag-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+document.getElementById('theme-icon').innerHTML = savedTheme === 'dark' ? SUN : MOON;
+
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+// 0=none, 1=some, 2=peak  — indexed by month Jan=0
+const REGIONS = {
+  wa: {
+    name: 'Western Australia',
+    state: 'WA',
+    mapId: 'map-wa',
+    tip: 'Carnarvon is the main hub for vegetable work in WA. Perth has construction and hospitality year-round. Mining regions offer the highest pay but need specific qualifications.',
+    months: [1,1,1,1,2,2,2,2,1,1,1,1],
+    crops: [
+      { name: 'Tomatoes & capsicum', emoji: '🍅', months: [0,0,0,1,2,2,2,2,1,0,0,0] },
+      { name: 'Bananas', emoji: '🍌', months: [1,1,1,1,1,1,1,1,1,1,1,1] },
+      { name: 'Citrus', emoji: '🍊', months: [0,0,0,0,1,2,2,1,0,0,0,0] },
+      { name: 'Grapes (Swan Valley)', emoji: '🍇', months: [1,2,1,0,0,0,0,0,0,0,0,1] },
+      { name: 'Strawberries', emoji: '🍓', months: [0,0,0,0,0,0,1,2,2,1,0,0] },
+    ],
+    towns: ['Carnarvon', 'Manjimup', 'Swan Valley', 'Donnybrook', 'Harvey'],
+    note: 'Carnarvon has year-round tomato and capsicum work. Manjimup and Donnybrook peak December-March for apples and stone fruit. Mining work (highest pay) is year-round but usually needs a White Card and experience.'
+  },
+  nt: {
+    name: 'Northern Territory',
+    state: 'NT',
+    mapId: 'map-nt',
+    tip: 'The NT is all about mangoes. The season is short but intense — September to December is when most backpackers head up here. Katherine and Darwin are your base.',
+    months: [1,1,0,0,0,0,0,0,1,2,2,1],
+    crops: [
+      { name: 'Mangoes', emoji: '🥭', months: [0,0,0,0,0,0,0,0,1,2,2,1] },
+      { name: 'Melons', emoji: '🍈', months: [0,0,0,0,1,2,1,0,0,0,0,0] },
+      { name: 'Bananas', emoji: '🍌', months: [1,1,1,1,1,1,1,1,1,1,1,1] },
+    ],
+    towns: ['Darwin', 'Katherine', 'Douglas Daly', 'Batchelor'],
+    note: 'Mango season (September-December) is the big one. Darwin becomes hectic with backpackers looking for work. Get there early in September before the rush. The heat and humidity is intense — this is not fun outdoor work, but the pay is decent and the 88 days clock up fast.'
+  },
+  qld: {
+    name: 'Queensland',
+    state: 'QLD',
+    mapId: 'map-qld',
+    tip: 'Queensland is the holy grail for backpackers doing their 88 days. Bundaberg is the most popular destination in the country — consistent work, great hostel infrastructure, and multiple crops so if one finishes, another starts.',
+    months: [2,2,2,1,1,2,2,2,2,2,2,2],
+    crops: [
+      { name: 'Tomatoes & capsicum', emoji: '🍅', months: [0,0,0,0,1,2,2,2,2,1,0,0] },
+      { name: 'Mangoes', emoji: '🥭', months: [0,0,0,0,0,0,0,0,0,1,2,1] },
+      { name: 'Strawberries', emoji: '🍓', months: [0,0,0,0,0,1,2,2,2,2,0,0] },
+      { name: 'Bananas', emoji: '🍌', months: [1,1,1,1,1,1,1,1,1,1,1,1] },
+      { name: 'Rockmelon & watermelon', emoji: '🍉', months: [1,1,0,0,0,1,2,2,2,1,0,0] },
+      { name: 'Macadamia nuts', emoji: '🌰', months: [0,1,2,2,1,0,0,0,0,0,0,0] },
+      { name: 'Sugar cane', emoji: '🎋', months: [0,0,0,0,0,1,2,2,2,2,1,0] },
+    ],
+    towns: ['Bundaberg', 'Bowen', 'Stanthorpe', 'Ayr', 'Childers', 'Emerald', 'Warwick'],
+    note: 'Bundaberg is the most reliable spot in Australia for year-round work. Multiple crops cycle through constantly. Bowen has excellent tomato and capsicum work May-October. Stanthorpe has beautiful stone fruit in February. Ayr and Ingham are good for bananas and sugar cane.'
+  },
+  sa: {
+    name: 'South Australia',
+    state: 'SA',
+    mapId: 'map-sa',
+    tip: 'SA peaks strongly February to April for grape harvest. The Barossa Valley and Riverland are the main areas. Good social scene in the wineries if that matters to you.',
+    months: [1,2,2,2,1,1,0,0,0,0,0,1],
+    crops: [
+      { name: 'Grapes', emoji: '🍇', months: [0,1,2,2,1,0,0,0,0,0,0,0] },
+      { name: 'Citrus', emoji: '🍊', months: [0,0,0,0,1,2,2,1,0,0,0,0] },
+      { name: 'Apples & pears', emoji: '🍎', months: [1,1,2,2,1,0,0,0,0,0,0,0] },
+      { name: 'Stone fruit', emoji: '🍑', months: [1,2,1,0,0,0,0,0,0,0,0,1] },
+      { name: 'Almonds', emoji: '🫘', months: [0,0,2,2,0,0,0,0,0,0,0,0] },
+    ],
+    towns: ['Barossa Valley', 'Clare Valley', 'Riverland (Berri, Loxton)', 'McLaren Vale', 'Coonawarra'],
+    note: 'February to April is peak. The Riverland region (Berri, Loxton, Renmark) has consistent work and decent hostel infrastructure. Barossa grape harvest in March is popular but fills up fast — book accommodation early if heading there.'
+  },
+  nsw: {
+    name: 'New South Wales',
+    state: 'NSW',
+    mapId: 'map-nsw',
+    tip: 'NSW has two distinct farming areas — the Riverina around Griffith/Mildura border for grapes and citrus, and the highlands around Young and Orange for cherries, apples, and stone fruit.',
+    months: [2,1,1,1,0,0,0,0,0,1,2,2],
+    crops: [
+      { name: 'Cherries', emoji: '🍒', months: [0,0,0,0,0,0,0,0,0,0,1,2] },
+      { name: 'Apples & pears', emoji: '🍎', months: [1,2,2,1,0,0,0,0,0,0,0,1] },
+      { name: 'Grapes', emoji: '🍇', months: [1,2,2,1,0,0,0,0,0,0,0,0] },
+      { name: 'Citrus', emoji: '🍊', months: [0,0,0,1,2,2,2,1,0,0,0,0] },
+      { name: 'Blueberries', emoji: '🫐', months: [0,0,0,0,0,0,0,0,0,1,2,2] },
+      { name: 'Cotton', emoji: '☁️', months: [0,0,1,2,1,0,0,0,0,0,0,0] },
+    ],
+    towns: ['Young (cherry capital)', 'Orange', 'Griffith', 'Batlow', 'Mudgee', 'Cowra'],
+    note: 'Young is famous for cherries November-January and calls itself the cherry capital of Australia. Orange and Batlow for apples February-April. Griffith for grapes and citrus. The Riverina region overall has good year-round options if you know where to look.'
+  },
+  vic: {
+    name: 'Victoria',
+    state: 'VIC',
+    mapId: 'map-vic',
+    tip: 'Victoria is concentrated but excellent. Mildura can keep you busy for 6+ months between grape harvest and winter pruning. Shepparton and the Goulburn Valley are stone fruit central.',
+    months: [1,2,2,1,0,1,1,0,0,0,1,2],
+    crops: [
+      { name: 'Grapes', emoji: '🍇', months: [0,2,2,1,0,0,0,0,0,0,0,0] },
+      { name: 'Pruning (grapes)', emoji: '✂️', months: [0,0,0,0,0,1,2,1,0,0,0,0] },
+      { name: 'Apples & pears', emoji: '🍎', months: [1,1,2,2,1,0,0,0,0,0,0,1] },
+      { name: 'Stone fruit', emoji: '🍑', months: [0,0,0,0,0,0,0,0,0,0,1,2] },
+      { name: 'Tomatoes', emoji: '🍅', months: [1,2,1,0,0,0,0,0,0,0,0,1] },
+      { name: 'Asparagus', emoji: '🌱', months: [0,0,0,0,0,0,0,0,1,2,1,0] },
+    ],
+    towns: ['Mildura', 'Shepparton', 'Swan Hill', 'Cobram', 'Echuca', 'Robinvale'],
+    note: 'Mildura is the best single location for racking up a lot of days quickly. Grape harvest February-April, then pruning June-August means you can be there for 6 months. Shepparton peaks for stone fruit November-January. Great base, good hostel scene, consistent work.'
+  },
+  tas: {
+    name: 'Tasmania',
+    state: 'TAS',
+    mapId: 'map-tas',
+    tip: 'Tassie is underrated. Smaller backpacker scene means less competition for work. Apple harvest February-May is the main event. Cooler climate makes it more bearable to work outdoors than Queensland in summer.',
+    months: [1,2,2,2,1,0,0,0,0,0,1,1],
+    crops: [
+      { name: 'Apples & pears', emoji: '🍎', months: [0,1,2,2,2,0,0,0,0,0,0,0] },
+      { name: 'Cherries', emoji: '🍒', months: [0,0,0,0,0,0,0,0,0,0,1,2] },
+      { name: 'Strawberries', emoji: '🍓', months: [0,1,2,1,0,0,0,0,0,0,0,0] },
+      { name: 'Vegetables', emoji: '🥕', months: [1,1,1,1,1,0,0,0,0,1,1,1] },
+    ],
+    towns: ['Huonville', 'Huon Valley', 'Coal River Valley', 'Tamar Valley', 'Scottsdale'],
+    note: 'Tasmania\'s apple harvest February-May is solid work. The Huon Valley is the main region. Less crowded than the mainland, cleaner air, no extreme heat. Ferry from Melbourne takes about 9 hours or fly cheap from Melbourne or Sydney.'
+  }
+};
+
+let currentMonth = new Date().getMonth();
+let selectedRegion = null;
+
+function setMonth(month, btn) {
+  currentMonth = month;
+  document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('map-month-label').textContent = MONTHS[month];
+  updateMapColors();
+  updateOverview();
+  if (selectedRegion) showDetail(selectedRegion);
+}
+
+function updateMapColors() {
+  Object.entries(REGIONS).forEach(([key, region]) => {
+    const el = document.getElementById(region.mapId);
+    if (!el) return;
+    const status = region.months[currentMonth];
+    el.classList.remove('has-work', 'peak-work');
+    if (el.classList.contains('active')) return;
+    if (status === 2) el.classList.add('peak-work');
+    else if (status === 1) el.classList.add('has-work');
+  });
+}
+
+function selectRegion(key) {
+  selectedRegion = key;
+  // Clear all active states
+  document.querySelectorAll('.region').forEach(el => {
+    el.classList.remove('active');
+  });
+  // Set active on selected
+  const region = REGIONS[key];
+  const el = document.getElementById(region.mapId);
+  if (el) {
+    el.classList.add('active');
+    el.classList.remove('has-work', 'peak-work');
+  }
+  showDetail(key);
+}
+
+function showDetail(key) {
+  const region = REGIONS[key];
+  const status = region.months[currentMonth];
+  const statusLabel = status === 2 ? 'Peak season' : status === 1 ? 'Work available' : 'Off season';
+  const statusClass = status === 2 ? 'status-peak' : status === 1 ? 'status-some' : 'status-none';
+  const statusEmoji = status === 2 ? '🌿' : status === 1 ? '📋' : '😴';
+
+  // Active crops this month
+  const activeCrops = region.crops.filter(c => c.months[currentMonth] > 0);
+
+  let cropHtml = region.crops.map(c => {
+    const active = c.months[currentMonth] > 0;
+    const peak = c.months[currentMonth] === 2;
+    return `<div class="crop-pill ${active ? 'active' : ''}">
+      <span class="crop-emoji">${c.emoji}</span>
+      <span>${c.name}${peak ? ' 🔥' : ''}</span>
+    </div>`;
+  }).join('');
+
+  // Season bar
+  const barHtml = `<div class="season-bar">${region.months.map((s, i) => {
+    const cls = s === 2 ? 'peak' : s === 1 ? 'active' : '';
+    return `<div class="season-month ${cls}" title="${MONTHS[i]}"></div>`;
+  }).join('')}</div>
+  <div class="season-months-labels">${['J','F','M','A','M','J','J','A','S','O','N','D'].map(m => `<div class="season-month-label">${m}</div>`).join('')}</div>`;
+
+  document.getElementById('detail-placeholder').style.display = 'none';
+  document.getElementById('detail-content').style.display = 'block';
+  document.getElementById('detail-content').innerHTML = `
+    <div class="detail-header">
+      <div class="detail-state">${region.state}</div>
+      <div class="detail-region-name">${region.name}</div>
+      <div class="detail-status ${statusClass}">${statusEmoji} ${statusLabel} — ${MONTHS[currentMonth]}</div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-section">
+        <div class="detail-section-label">Season overview</div>
+        ${barHtml}
+        <div style="font-size:11px;color:var(--text-faint);margin-top:6px;">Orange = peak · Green = available · Grey = limited</div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-label">Crops ${activeCrops.length > 0 ? '— active this month highlighted' : '— nothing in season this month'}</div>
+        <div class="crop-pills">${cropHtml}</div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-label">Key towns & regions</div>
+        <div class="crop-pills">${region.towns.map(t => `<div class="crop-pill">📍 ${t}</div>`).join('')}</div>
+      </div>
+      <div class="detail-tip">
+        <strong>Honest take:</strong> ${region.note}
+      </div>
+      <div class="detail-links">
+        <a href="https://www.workforceaustralia.gov.au/individuals/jobs/harvest" target="_blank" rel="noopener" class="detail-link">
+          <span>🌾 Harvest Trail — official job listings</span>
+          <span class="detail-link-arrow">→</span>
+        </a>
+        <a href="/visa-calculator.html" class="detail-link">
+          <span>🗓 Track your 88 days progress</span>
+          <span class="detail-link-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  `;
+}
+
+function updateOverview() {
+  const title = document.getElementById('overview-title');
+  title.textContent = `All regions in ${MONTHS[currentMonth]}`;
+
+  const grid = document.getElementById('overview-grid');
+  grid.innerHTML = Object.entries(REGIONS).map(([key, region]) => {
+    const status = region.months[currentMonth];
+    const isPeak = status === 2;
+    const isSome = status === 1;
+    const activeCrops = region.crops.filter(c => c.months[currentMonth] > 0).map(c => c.emoji + ' ' + c.name).join(', ') || 'Limited work this month';
+    const statusText = isPeak ? '🔥 Peak season' : isSome ? '✅ Work available' : '😴 Off season';
+    const statusClass = isPeak ? 'status-text-peak' : isSome ? 'status-text-some' : 'status-text-none';
+    return `<div class="overview-region ${isPeak ? 'peak' : ''}" onclick="selectRegion('${key}')">
+      <div class="overview-region-name">${region.name}</div>
+      <div class="overview-region-state">${region.state}</div>
+      <div class="overview-crops">${activeCrops}</div>
+      <div class="overview-status ${statusClass}">${statusText}</div>
+    </div>`;
+  }).join('');
+}
+
+// Init
+const currentMonthBtn = document.querySelector(`[data-month="${currentMonth}"]`);
+if (currentMonthBtn) {
+  currentMonthBtn.classList.add('active');
+  document.getElementById('map-month-label').textContent = MONTHS[currentMonth];
+}
+updateMapColors();
+updateOverview();
+</script>
+</body>
+</html>
