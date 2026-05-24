@@ -99,35 +99,69 @@ nav {
   border-bottom: 1px solid var(--border);
   padding: 0 32px;
   display: flex; align-items: center; justify-content: space-between;
-  height: 60px;
+  height: 64px;
 }
 .nav-logo {
   font-family: 'Playfair Display', serif;
   font-size: 20px; font-weight: 700;
   color: var(--text); text-decoration: none;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.3px; flex-shrink: 0;
 }
 .nav-logo .dot { color: var(--accent); }
-.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links { display: flex; gap: 24px; align-items: center; }
 .nav-links a {
   font-size: 14px; color: var(--text-muted);
   text-decoration: none; font-weight: 500;
-  transition: color 0.15s;
+  transition: color 0.15s; white-space: nowrap;
 }
 .nav-links a:hover { color: var(--text); }
-.nav-links .nav-tool {
-  background: var(--accent-light);
-  color: var(--accent);
-  border: 1px solid var(--accent-border);
-  padding: 6px 14px;
-  border-radius: 100px;
-  font-size: 13px; font-weight: 600;
+.nav-sep { width: 1px; height: 18px; background: var(--border-warm); flex-shrink: 0; }
+.tools-dropdown {
+  position: relative;
 }
+.tools-dropdown-btn {
+  display: flex; align-items: center; gap: 7px;
+  background: var(--accent); color: var(--btn-text);
+  border: none; border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: inherit;
+  transition: all 0.15s; white-space: nowrap;
+}
+.tools-dropdown-btn:hover { opacity: 0.88; }
+.tools-dropdown-btn svg { width: 12px; height: 12px; transition: transform 0.2s; }
+.tools-dropdown:hover .tools-dropdown-btn svg { transform: rotate(180deg); }
+.tools-dropdown-menu {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: 12px; padding: 8px;
+  min-width: 220px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  opacity: 0; pointer-events: none;
+  transform: translateY(-8px);
+  transition: all 0.2s;
+  z-index: 200;
+}
+.tools-dropdown:hover .tools-dropdown-menu {
+  opacity: 1; pointer-events: all; transform: translateY(0);
+}
+.tools-dropdown-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: 8px;
+  text-decoration: none; color: var(--text);
+  transition: background 0.15s; font-size: 14px;
+}
+.tools-dropdown-item:hover { background: var(--bg-soft); }
+.tools-dropdown-item-icon { font-size: 16px; flex-shrink: 0; width: 24px; text-align: center; }
+.tools-dropdown-item-label { font-weight: 600; font-size: 13px; }
+.tools-dropdown-item-sub { font-size: 11px; color: var(--text-faint); margin-top: 1px; }
+.tools-dropdown-divider { height: 1px; background: var(--border); margin: 4px 0; }
 .theme-btn {
   width: 34px; height: 34px; border-radius: 8px;
   background: transparent; border: 1px solid var(--border);
   cursor: pointer; display: flex; align-items: center; justify-content: center;
-  color: var(--text-muted); transition: all 0.15s;
+  color: var(--text-muted); transition: all 0.15s; flex-shrink: 0;
 }
 .theme-btn:hover { color: var(--text); border-color: var(--border-warm); }
 .theme-btn svg { width: 15px; height: 15px; }
@@ -700,11 +734,36 @@ footer a { color: var(--accent); text-decoration: none; }
     <a href="#journey">The journey</a>
     <a href="#chapters">Guide</a>
     <a href="#blog">Blog</a>
-    <a href="/visa-calculator.html" class="nav-tool">🗓 Visa Calc</a>
-    <a href="/cv-builder.html" class="nav-tool">📄 CV Builder</a>
-    <a href="/salary-calculator.html" class="nav-tool">💰 Salary Calc</a>
-    <a href="/farm-work-map.html" class="nav-tool">🌾 Farm Map</a>
-    <a href="#about">About</a>
+    <div class="nav-sep"></div>
+    <div class="tools-dropdown">
+      <button class="tools-dropdown-btn">
+        🛠 Free Tools
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="tools-dropdown-menu">
+        <a href="/visa-calculator.html" class="tools-dropdown-item">
+          <span class="tools-dropdown-item-icon">🗓</span>
+          <div><div class="tools-dropdown-item-label">Visa Calculator</div><div class="tools-dropdown-item-sub">Expiry, deadlines, 88 day tracker</div></div>
+        </a>
+        <a href="/cv-builder.html" class="tools-dropdown-item">
+          <span class="tools-dropdown-item-icon">📄</span>
+          <div><div class="tools-dropdown-item-label">CV Builder</div><div class="tools-dropdown-item-sub">Australian format resume in 5 min</div></div>
+        </a>
+        <a href="/salary-calculator.html" class="tools-dropdown-item">
+          <span class="tools-dropdown-item-icon">💰</span>
+          <div><div class="tools-dropdown-item-label">Salary Calculator</div><div class="tools-dropdown-item-sub">Check your legal pay rate</div></div>
+        </a>
+        <a href="/super-calculator.html" class="tools-dropdown-item">
+          <span class="tools-dropdown-item-icon">🏦</span>
+          <div><div class="tools-dropdown-item-label">Super Calculator</div><div class="tools-dropdown-item-sub">How much you'll get back via DASP</div></div>
+        </a>
+        <div class="tools-dropdown-divider"></div>
+        <a href="/farm-work-map.html" class="tools-dropdown-item">
+          <span class="tools-dropdown-item-icon">🌾</span>
+          <div><div class="tools-dropdown-item-label">Farm Work Map</div><div class="tools-dropdown-item-sub">Where to go this month</div></div>
+        </a>
+      </div>
+    </div>
   </div>
   <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
     <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
@@ -2259,20 +2318,20 @@ footer a { color: var(--accent); text-decoration: none; }
       <a href="/blog/bank-account-australia-working-holiday-visa.html" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; text-decoration: none; display: block; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--border-warm)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateY(0)'">
         <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 12px;">Bank accounts · 8 min read</div>
         <div style="font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 10px; letter-spacing: -0.3px;">How to Open a Bank Account in Australia on a Working Holiday Visa</div>
-        <div style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">The address trick, Up Bank vs CommBank, and why you need this done in your first 48 hours. Nobody puts this in the FAQ.</div>
+        <div style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">The address trick, Up Bank vs CommBank, and why you need this done in your first 48 hours.</div>
         <div style="font-size: 13px; color: var(--accent); font-weight: 600; margin-top: 16px;">Read more →</div>
       </a>
-      <a href="/blog/tfn-australia-working-holiday-visa.html" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; text-decoration: none; display: block; transition: all 0.2s; opacity: 0.6;" onmouseover="this.style.borderColor='var(--border-warm)'" onmouseout="this.style.borderColor='var(--border)'">
-        <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 12px;">Tax · Coming soon</div>
+      <a href="/blog/tfn-australia-working-holiday-visa.html" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; text-decoration: none; display: block; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--border-warm)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateY(0)'">
+        <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 12px;">Tax · 6 min read</div>
         <div style="font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 10px; letter-spacing: -0.3px;">How to Get Your TFN — and Why You Need It Before Your First Shift</div>
         <div style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">The free 10-minute form that saves you 32% in tax. And the agencies charging $200 to do it for you.</div>
-        <div style="font-size: 13px; color: var(--text-faint); font-weight: 600; margin-top: 16px;">Coming soon</div>
+        <div style="font-size: 13px; color: var(--accent); font-weight: 600; margin-top: 16px;">Read more →</div>
       </a>
-      <a href="/blog/superannuation-backpacker-australia.html" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; text-decoration: none; display: block; transition: all 0.2s; opacity: 0.6;" onmouseover="this.style.borderColor='var(--border-warm)'" onmouseout="this.style.borderColor='var(--border)'">
-        <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 12px;">Money · Coming soon</div>
-        <div style="font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 10px; letter-spacing: -0.3px;">Superannuation: The Free Money Most Backpackers Leave Behind When They Leave Australia</div>
-        <div style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">11% of every paycheck going into a fund in your name. You can claim it all back. Most people don't.</div>
-        <div style="font-size: 13px; color: var(--text-faint); font-weight: 600; margin-top: 16px;">Coming soon</div>
+      <a href="/blog/superannuation-backpacker-australia.html" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; text-decoration: none; display: block; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--border-warm)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateY(0)'">
+        <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 12px;">Money · 9 min read</div>
+        <div style="font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 10px; letter-spacing: -0.3px;">Superannuation: The Free Money Most Backpackers Leave Behind When They Fly Home</div>
+        <div style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">11% of every paycheck in a fund with your name on it. Claimable when you leave. Most backpackers never do.</div>
+        <div style="font-size: 13px; color: var(--accent); font-weight: 600; margin-top: 16px;">Read more →</div>
       </a>
     </div>
   </div>
@@ -2293,9 +2352,17 @@ footer a { color: var(--accent); text-decoration: none; }
 
 <footer>
   <div class="footer-logo">MyArrivalGuide<span class="dot">.</span></div>
-  <p>Made by a backpacker, for backpackers.<br>
-  Last updated May 2026 · Not legal or visa advice<br>
-  <a href="#about">About</a> · <a href="/visa-calculator.html">Visa Calculator</a> · <a href="#chapters">Guide</a></p>
+  <p>Made by a backpacker, for backpackers · Last updated May 2026 · Not legal or visa advice</p>
+  <p style="margin-top:12px;">
+    <a href="#chapters">Guide</a> ·
+    <a href="#blog">Blog</a> ·
+    <a href="/visa-calculator.html">Visa Calculator</a> ·
+    <a href="/cv-builder.html">CV Builder</a> ·
+    <a href="/salary-calculator.html">Salary Calculator</a> ·
+    <a href="/super-calculator.html">Super Calculator</a> ·
+    <a href="/farm-work-map.html">Farm Work Map</a> ·
+    <a href="#about">About</a>
+  </p>
 </footer>
 
 <script>
