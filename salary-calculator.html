@@ -299,7 +299,7 @@ nav {
           <div class="results-stat-sub">based on your rate</div>
         </div>
         <div class="results-stat">
-          <div class="results-stat-label">Super owed (11%)</div>
+          <div class="results-stat-label">Super owed (11.5%)</div>
           <div class="results-stat-value" id="res-super">$0</div>
           <div class="results-stat-sub">on top of your wages</div>
         </div>
@@ -317,7 +317,7 @@ nav {
 
     <div class="alert alert-good">
       <div class="alert-icon">💰</div>
-      <div class="alert-text"><strong>Don't forget super.</strong> Your employer must also pay 11% of your wages into your super fund. This is on top of what you receive. When you leave Australia, claim it all back via DASP — free money most backpackers never collect. <a href="/#step-24" style="color:var(--green)">Read more about super →</a></div>
+      <div class="alert-text"><strong>Don't forget super.</strong> Your employer must also pay 11.5% of your wages into your super fund. This is on top of what you receive. When you leave Australia, claim it all back via DASP — free money most backpackers never collect. <a href="/#step-24" style="color:var(--green)">Read more about super →</a></div>
     </div>
   </div>
 
@@ -395,7 +395,7 @@ function calculate() {
   const effectiveRate = baseRate * casualMulti * dayMulti;
   const shiftTotal = effectiveRate * hoursInput;
   const weekly = effectiveRate * 38;
-  const superAmt = shiftTotal * 0.11;
+  const superAmt = shiftTotal * 0.115;
 
   document.getElementById('res-hourly').innerHTML = `${fmt(effectiveRate)}<span>/hr</span>`;
   document.getElementById('res-sub').textContent = `${ind.label} · ${empType === 'casual' ? 'Casual' : 'Permanent'} · ${dayLabel}`;
@@ -411,7 +411,7 @@ function calculate() {
   if (empType === 'casual') rows.push({ label: `Casual loading (+${Math.round((ind.casual-1)*100)}%)`, val: fmt(Math.max(rateInput,MIN_WAGE) * ind.casual), note: 'Because no sick/holiday pay' });
   if (dayMulti > 1) rows.push({ label: `${dayLabel} penalty rate (×${dayMulti})`, val: fmt(effectiveRate), note: `${ind.label}` });
   rows.push({ label: `Shift total (${hoursInput}h × ${fmt(effectiveRate)})`, val: fmt(shiftTotal), note: '' });
-  rows.push({ label: `Super owed (11% on top)`, val: fmt(superAmt), note: 'Employer pays this separately' });
+  rows.push({ label: `Super owed (11.5% on top)`, val: fmt(superAmt), note: 'Employer pays this separately' });
 
   document.getElementById('breakdown-rows').innerHTML = rows.map(r =>
     `<div class="breakdown-row">
